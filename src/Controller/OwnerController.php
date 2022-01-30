@@ -9,10 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class OwnerController extends AbstractController
 {
     /**
-     * @Route("/proprietaire", name="owner")
+     * @Route("/owner/create", name="owner_create")
      */
     public function index(): Response
     {
-        return $this->render('base.html.twig');
+        return $this->render('owner/create.html.twig', [
+            'controller_name' => 'OwnerController',
+        ]);
     }
 }
