@@ -12,7 +12,7 @@
 			<a href="{{path('homepage')}}">Accueil</a>
 		</li>
 		<li class="breadcrumb-item">
-			<a href="{{path('owner_show', { 'id': owner.id })}}">Propriétaires</a>
+			<a href="{{path('owner_list')}}">Propriétaires</a>
 		</li>
 		<li class="breadcrumb-item active">{{owner.firstName}}
 			{{owner.lastName}}</li>
@@ -41,8 +41,8 @@
 			<h6 class="card-title">Commentaire</h6>
 			<p class="card-text text-white mb-4">{{owner.comment}}</p>
 
-			<button type="button" href="#" class="btn btn-primary">Retour</button>
-			<button type="button" href="#" class="btn btn-info">Editer</button>
+			<a href="{{urlGenerator.generate('owner_list')}}" class="btn btn-primary">Retour</a>
+			<a href="#" class="btn btn-info">Editer</a>
 
 		</div>
 	</div>

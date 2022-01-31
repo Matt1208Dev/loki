@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Liste des propriétaires
+{% endblock %}
+
+{% block body %}
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a href="{{path('homepage')}}">Accueil</a>
+		</li>
+		<li class="breadcrumb-item">
+			<a href="{{path('owner_list')}}">Propriétaires</a>
+		</li>
+	</ol>
+
+	<h1 class="mb-3">Tous les propriétaires</h1>
+
+<div class="row">
+    <div class="col-lg-6">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col"><em>Nom</em></th>
+				<th scope="col"></th>
+
+			</tr>
+		</thead>
+		<tbody>
+			{% for owner in owners %}
+				<tr class="table-primary">
+					<td scope="row">{{owner.lastName}}
+						{{owner.firstName}}</td>
+					<td>
+						<a class="text-info" href="{{urlGenerator.generate('owner_show', {'id': owner.id }) }}">Détails</a>
+					</td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+    </div>
+</div>
+{% endblock %}

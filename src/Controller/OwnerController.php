@@ -6,6 +6,7 @@ use App\Repository\OwnerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class OwnerController extends AbstractController
 {
@@ -20,9 +21,26 @@ class OwnerController extends AbstractController
     }
 
     /**
+     * @Route("/owner", name="owner_list")
+     */
+    public function list(OwnerRepository $ownerRepository, UrlGeneratorInterface $urlGenerator)
+    {
+        $owners = $ownerRepository->findBy( [], ['lastName' => 'ASC'], null);
+
+        if (!$owners) {
+            throw $this->createNotFoundException("Aucune donnée à afficher");
+        }
+
+        return $this->render('owner/list.html.twig', [
+            'owners' => $owners,
+            'urlGenerator' => $urlGenerator
+        ]);
+    }
+
+    /**
      * @Route("/owner/{id}", name="owner_show")
      */
-    public function show($id, OwnerRepository $ownerRepository)
+    public function show($id, OwnerRepository $ownerRepository, UrlGeneratorInterface $urlGenerator)
     {
         $owner = $ownerRepository->findOneBy([
             'id' => $id
@@ -33,7 +51,8 @@ class OwnerController extends AbstractController
         }
 
         return $this->render('owner/show.html.twig', [
-            'owner' => $owner
+            'owner' => $owner,
+            'urlGenerator' => $urlGenerator
         ]);
     }
 }
