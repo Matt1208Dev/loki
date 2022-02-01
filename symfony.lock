@@ -205,6 +205,9 @@
             ".env"
         ]
     },
+    "symfony/form": {
+        "version": "v5.4.3"
+    },
     "symfony/framework-bundle": {
         "version": "5.4",
         "recipe": {
@@ -229,6 +232,9 @@
     },
     "symfony/http-kernel": {
         "version": "v5.4.4"
+    },
+    "symfony/intl": {
+        "version": "v5.4.3"
     },
     "symfony/maker-bundle": {
         "version": "1.36",
@@ -257,7 +263,13 @@
             "config/packages/test/monolog.yaml"
         ]
     },
+    "symfony/options-resolver": {
+        "version": "v5.4.3"
+    },
     "symfony/polyfill-intl-grapheme": {
+        "version": "v1.24.0"
+    },
+    "symfony/polyfill-intl-icu": {
         "version": "v1.24.0"
     },
     "symfony/polyfill-intl-normalizer": {
@@ -274,6 +286,12 @@
     },
     "symfony/polyfill-php81": {
         "version": "v1.24.0"
+    },
+    "symfony/property-access": {
+        "version": "v5.4.3"
+    },
+    "symfony/property-info": {
+        "version": "v5.4.3"
     },
     "symfony/proxy-manager-bridge": {
         "version": "v5.4.3"
@@ -347,6 +365,9 @@
     },
     "twig/extra-bundle": {
         "version": "v3.3.7"
+    },
+    "twig/intl-extra": {
+        "version": "v3.3.5"
     },
     "twig/twig": {
         "version": "v3.3.7"

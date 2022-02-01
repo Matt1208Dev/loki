@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Owner;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -22,7 +24,8 @@ class AppFixtures extends Fixture
                 ->setCity($faker->city())
                 ->setPhone($faker->phoneNumber())
                 ->setMail($faker->email())
-                ->setComment($faker->sentence());
+                ->setComment($faker->sentence())
+                ->setCreatedAt($faker->dateTimeBetween('-6 months'));
 
             $manager->persist($owner);
         }
