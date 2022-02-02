@@ -16,29 +16,33 @@
 
 	<h1 class="mb-3">Tous les propriétaires</h1>
 
-<div class="row">
-    <div class="col-lg-6">
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th scope="col"><em>Nom</em></th>
-				<th scope="col"></th>
+	<div class="row">
+		<div class="col-lg-6">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">
+							<em>Nom</em>
+						</th>
+						<th scope="col"></th>
 
-			</tr>
-		</thead>
-		<tbody>
-			{% for owner in owners %}
-				<tr class="table-primary">
-					<td scope="row">{{owner.lastName}}
-						{{owner.firstName}}</td>
-					<td>
-						<a class="text-info" href="{{urlGenerator.generate('owner_show', {'id': owner.id }) }}">Détails</a>
-					</td>
-				</tr>
-			{% endfor %}
+					</tr>
+				</thead>
+				<tbody>
+					{% for owner in owners %}
+						<tr class="table-primary">
+							<td scope="row">{{owner.lastName}}
+								{{owner.firstName}}</td>
+							<td>
+								<a class="text-info" href="{{urlGenerator.generate('owner_show', {'id': owner.id }) }}">Détails</a>
+							</td>
+						</tr>
+					{% endfor %}
 
-		</tbody>
-	</table>
-    </div>
-</div>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<a href="{{urlGenerator.generate('owner_create')}}" class="btn btn-success mb-3">Ajouter un nouveau propriétaire</a>
 {% endblock %}

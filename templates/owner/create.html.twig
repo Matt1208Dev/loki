@@ -1,20 +1,58 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
 
-{% block title %}Hello OwnerController!{% endblock %}
+{# {% form_theme formView 'bootstrap_5_layout.html.twig' %} #}
+
+{% block title %}
+	Création d'une fiche propriétaire
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a href="{{path('homepage')}}">Accueil</a>
+		</li>
+		<li class="breadcrumb-item">
+			<a href="{{path('owner_list')}}">Propriétaires</a>
+		</li>
+		<li class="breadcrumb-item active">Ajout</li>
+	</ol>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<h1 class="mb-4">Ajouter un nouveau propriétaire</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/matthieugueulle/Developpement/loki_project/src/Controller/OwnerController.php'|file_link(0) }}">src/Controller/OwnerController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/matthieugueulle/Developpement/loki_project/templates/owner/index.html.twig'|file_link(0) }}">templates/owner/index.html.twig</a></code></li>
-    </ul>
-</div>
+	{# {{ form (formView)}} #}
+
+	{{ form_start(formView)}}
+
+	{{ form_errors(formView)}}
+
+	{# {{ form_widget(formView)}} #}
+	<div class="row">
+		<div class="col">
+			{{ form_row(formView.lastName)}}
+			{{ form_row(formView.firstName)}}
+			{{ form_row(formView.street)}}
+			{{ form_row(formView.zip)}}
+		</div>
+		<div class="col">
+			{{ form_row(formView.city)}}
+			{{ form_row(formView.phone)}}
+			{{ form_row(formView.mail)}}
+			{{ form_row(formView.comment)}}
+		</div>
+	</div>
+
+	<a href="{{urlGenerator.generate('owner_list')}}" class="btn btn-primary">Retour</a>
+	<button type="submit" class="btn btn-success">Créer</button>
+
+	{{ form_end(formView)}}
+{% endblock %}
+
+{% block form_row %}
+
+	<div class="form-group">
+		{{ form_label(form) }}
+		{{ form_widget(form, {'attr': {'class' : 'form-control'} }) }}
+		{{ form_help(form) }}
+		{{ form_errors(form) }}
+	</div>
 {% endblock %}
