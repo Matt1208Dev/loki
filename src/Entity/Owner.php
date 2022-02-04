@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OwnerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,6 +63,16 @@ class Owner
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Apartment::class, mappedBy="owner")
+     */
+    private $apartments;
+
+    public function __construct()
+    {
+        $this->apartments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -171,6 +183,36 @@ class Owner
     public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Apartment[]
+     */
+    public function getApartments(): Collection
+    {
+        return $this->apartments;
+    }
+
+    public function addApartment(Apartment $apartment): self
+    {
+        if (!$this->apartments->contains($apartment)) {
+            $this->apartments[] = $apartment;
+            $apartment->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApartment(Apartment $apartment): self
+    {
+        if ($this->apartments->removeElement($apartment)) {
+            // set the owning side to null (unless already changed)
+            if ($apartment->getOwner() === $this) {
+                $apartment->setOwner(null);
+            }
+        }
 
         return $this;
     }
