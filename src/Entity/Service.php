@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ServiceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,16 @@ class Service
      * @ORM\Column(type="decimal", precision=5, scale=2)
      */
     private $price;
+
+    /**
+     * @ORM\OneToMany(targetEntity=RentRow::class, mappedBy="service")
+     */
+    private $rentRows;
+
+    public function __construct()
+    {
+        $this->rentRows = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -52,6 +64,36 @@ class Service
     public function setPrice(string $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RentRow[]
+     */
+    public function getRentRows(): Collection
+    {
+        return $this->rentRows;
+    }
+
+    public function addRentRow(RentRow $rentRow): self
+    {
+        if (!$this->rentRows->contains($rentRow)) {
+            $this->rentRows[] = $rentRow;
+            $rentRow->setService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRentRow(RentRow $rentRow): self
+    {
+        if ($this->rentRows->removeElement($rentRow)) {
+            // set the owning side to null (unless already changed)
+            if ($rentRow->getService() === $this) {
+                $rentRow->setService(null);
+            }
+        }
 
         return $this;
     }

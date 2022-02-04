@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -73,6 +75,16 @@ class Rent
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=RentRow::class, mappedBy="rent")
+     */
+    private $rentRows;
+
+    public function __construct()
+    {
+        $this->rentRows = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -207,6 +219,36 @@ class Rent
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RentRow[]
+     */
+    public function getRentRows(): Collection
+    {
+        return $this->rentRows;
+    }
+
+    public function addRentRow(RentRow $rentRow): self
+    {
+        if (!$this->rentRows->contains($rentRow)) {
+            $this->rentRows[] = $rentRow;
+            $rentRow->setRent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRentRow(RentRow $rentRow): self
+    {
+        if ($this->rentRows->removeElement($rentRow)) {
+            // set the owning side to null (unless already changed)
+            if ($rentRow->getRent() === $this) {
+                $rentRow->setRent(null);
+            }
+        }
 
         return $this;
     }
