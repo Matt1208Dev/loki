@@ -47,7 +47,13 @@
 					<h6 class="card-title">Email</h6>
 					<p class="card-text text-white mb-4">{{owner.mail}}</p>
 					<h6 class="card-title">Commentaire</h6>
-					<p class="card-text text-white mb-4">{{owner.comment}}</p>
+
+					{% if (owner.comment == null) %}
+						<p class="card-text text-white mb-4">Aucun</p>
+					{% else %}
+						<p class="card-text text-white mb-4">{{owner.comment}}</p>
+					{% endif %}
+					
 					<h6 class="card-title">Date de création</h6>
 					<p class="card-text text-white mb-4">{{owner.createdAt | format_datetime('short', 'short', locale='fr')}}</p>
 				</div>

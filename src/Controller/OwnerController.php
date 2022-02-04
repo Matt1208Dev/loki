@@ -2,25 +2,18 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Owner;
-use DateTimeInterface;
+use App\Form\OwnerType;
 use Faker\Provider\ar_EG\Text;
 use App\Repository\OwnerRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class OwnerController extends AbstractController
 {
@@ -36,7 +29,7 @@ class OwnerController extends AbstractController
 
         // Création du builder en utilisant OwnerType
         $builder = $factory->createBuilder(OwnerType::class);
-        
+
         $form = $builder->getForm();
 
         $form->handleRequest($request);

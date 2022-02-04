@@ -61,6 +61,7 @@ class OwnerType extends AbstractType
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'Commentaire',
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'Complément d\'adresse, observations...'
                 ]
