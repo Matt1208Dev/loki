@@ -69,9 +69,15 @@ class Owner
      */
     private $apartments;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Rent::class, mappedBy="Owner")
+     */
+    private $rents;
+
     public function __construct()
     {
         $this->apartments = new ArrayCollection();
+        $this->rents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -211,6 +217,36 @@ class Owner
             // set the owning side to null (unless already changed)
             if ($apartment->getOwner() === $this) {
                 $apartment->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rent[]
+     */
+    public function getRents(): Collection
+    {
+        return $this->rents;
+    }
+
+    public function addRent(Rent $rent): self
+    {
+        if (!$this->rents->contains($rent)) {
+            $this->rents[] = $rent;
+            $rent->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRent(Rent $rent): self
+    {
+        if ($this->rents->removeElement($rent)) {
+            // set the owning side to null (unless already changed)
+            if ($rent->getOwner() === $this) {
+                $rent->setOwner(null);
             }
         }
 
