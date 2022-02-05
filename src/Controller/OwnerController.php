@@ -18,6 +18,37 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class OwnerController extends AbstractController
 {
     /**
+     * @Route("/owner/{id}/edit", name="owner_edit")
+     */
+    public function edit($id, OwnerRepository $ownerRepository, UrlGeneratorInterface $urlGenerator, Request $request, EntityManagerInterface $em)
+    {
+        $owner = $ownerRepository->find($id);
+
+        $form = $this->createForm(OwnerType::class);
+
+        $form->setData($owner);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted()){
+            $form->getData();
+            $em->flush();
+
+
+            return $this->redirectToRoute('owner_show', [
+                'id' => $owner->getId()
+            ]);
+        }
+
+        $formView = $form->createView();
+
+        return $this->render('owner/edit.html.twig', [
+            'owner' => $owner,
+            'formView' => $formView,
+            'urlGenerator' => $urlGenerator
+        ]);
+    }
+
+    /**
      * @Route("/owner/create", name="owner_create")
      */
     public function create(FormFactoryInterface $factory, UrlGeneratorInterface $urlGenerator, Request $request, EntityManagerInterface $em): Response
@@ -27,10 +58,13 @@ class OwnerController extends AbstractController
         //     'data_class' => Owner::class
         // ]);
 
-        // Création du builder en utilisant OwnerType
-        $builder = $factory->createBuilder(OwnerType::class);
+        // Création du builder en utilisant OwnerType et le FormFactoryInterface
+        // $builder = $factory->createBuilder(OwnerType::class);
 
-        $form = $builder->getForm();
+        // $form = $builder->getForm();
+
+        // Création du formulaire directement avec OwnerType et le raccourci de l'Abstract Controller
+        $form = $this->createForm(OwnerType::class);
 
         $form->handleRequest($request);
 
@@ -40,7 +74,7 @@ class OwnerController extends AbstractController
             $owner->setCreatedAt(new DateTime());
             $em->persist($owner);
             $em->flush();
-            dd($owner);
+
         }
 
         $formView = $form->createView();

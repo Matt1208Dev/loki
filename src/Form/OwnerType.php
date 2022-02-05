@@ -35,7 +35,7 @@ class OwnerType extends AbstractType
                     'placeholder' => 'Entrez le numéro et la rue'
                 ]
             ])
-            ->add('zip', NumberType::class, [
+            ->add('zip', TextType::class, [
                 'label' => 'Code postal',
                 'attr' => [
                     'placeholder' => 'Entrez le code postal'
