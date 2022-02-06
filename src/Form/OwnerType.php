@@ -21,50 +21,57 @@ class OwnerType extends AbstractType
             'label' => 'Nom',
             'attr' => [
                 'placeholder' => 'Entrez le nom'
-            ]
+            ],
+            'required' => false
         ])
             ->add('firstName', TextType::class, [
                 'label' => 'Prénom',
                 'attr' => [
                     'placeholder' => 'Entrez le prénom'
-                ]
+                ],
+                'required' => false
             ])
             ->add('street', TextType::class, [
                 'label' => 'Adresse',
                 'attr' => [
                     'placeholder' => 'Entrez le numéro et la rue'
-                ]
+                ],
+                'required' => false
             ])
             ->add('zip', TextType::class, [
                 'label' => 'Code postal',
                 'attr' => [
                     'placeholder' => 'Entrez le code postal'
-                ]
+                ],
+                'required' => false
             ])
             ->add('city', TextType::class, [
                 'label' => 'Ville',
                 'attr' => [
                     'placeholder' => 'Entrez la ville'
-                ]
+                ],
+                'required' => false
             ])
             ->add('phone', TelType::class, [
                 'label' => 'Numéro de téléphone',
                 'attr' => [
                     'placeholder' => 'Entrez le numéro de téléphone'
-                ]
+                ],
+                'required' => false
             ])
             ->add('mail', EmailType::class, [
                 'label' => 'Email',
                 'attr' => [
                     'placeholder' => 'Entrez l\'adresse mail'
-                ]
+                ],
+                'required' => false
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'Commentaire',
-                'required' => false,
                 'attr' => [
                     'placeholder' => 'Complément d\'adresse, observations...'
-                ]
+                ],
+                'required' => false
             ]);
         ;
     }

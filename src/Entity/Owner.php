@@ -6,6 +6,7 @@ use App\Repository\OwnerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=OwnerRepository::class)
@@ -21,41 +22,53 @@ class Owner
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Le prénom est obligatoire")
+     * @Assert\Length(min=1, max=50, maxMessage="Le prénom ne doit pas excéder 50 caractères")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Le nom est obligatoire")
+     * @Assert\Length(min=1, max=50, maxMessage="Le nom ne doit pas excéder 50 caractères")
+     * caractères")
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Assert\Length(min=1, max=80, maxMessage="L'adresse ne doit pas excéder 150 caractères")
      */
     private $street;
 
     /**
      * @ORM\Column(type="string", length=80, nullable=true)
+     * @Assert\Length(min=1, max=50, maxMessage="Le nom de la ville ne doit pas excéder 80 caractères")
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=6, nullable=true)
+     * @Assert\Regex("/^(([0-8][0-9])|(9[0-5]))[0-9]{3}$/", message="Vous n'avez pas entré un code postal valide")
      */
     private $zip;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @Assert\Length(min=10, max=10, minMessage="Le numéro de téléphone doit comporter 10 chiffres", maxMessage="Le numéro de téléphone doit comporter 10 chiffres")
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex("/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/", message="Le mail n'est pas conforme")
+     * @Assert\Length(max=255, maxMessage="L'adresse mail ne doit pas excéder 255 caractères")
      */
     private $mail;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max=255, maxMessage="Le commentaire ne doit pas excéder 255 caractères")
      */
     private $comment;
 
@@ -90,7 +103,7 @@ class Owner
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): self
+    public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
 
@@ -102,7 +115,7 @@ class Owner
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): self
+    public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
 
@@ -114,7 +127,7 @@ class Owner
         return $this->street;
     }
 
-    public function setStreet(string $street): self
+    public function setStreet(?string $street): self
     {
         $this->street = $street;
 

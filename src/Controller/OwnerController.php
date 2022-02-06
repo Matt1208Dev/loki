@@ -29,10 +29,10 @@ class OwnerController extends AbstractController
         $form->setData($owner);
 
         $form->handleRequest($request);
-        if($form->isSubmitted()){
+
+        if($form->isSubmitted() && $form->isValid()){
             $form->getData();
             $em->flush();
-
 
             return $this->redirectToRoute('owner_show', [
                 'id' => $owner->getId()
