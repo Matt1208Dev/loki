@@ -5,6 +5,7 @@ namespace App\Controller;
 use DateTime;
 use App\Entity\Owner;
 use App\Form\OwnerType;
+use App\Form\ConfirmType;
 use Faker\Provider\ar_EG\Text;
 use App\Repository\OwnerRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -92,10 +93,38 @@ class OwnerController extends AbstractController
     /**
      * @Route("/owner/{id}/remove", name="owner_remove")
      */
-    public function remove($id, FormFactoryInterface $factory, UrlGeneratorInterface $urlGenerator, Request $request, EntityManagerInterface $em)
+    public function remove($id, OwnerRepository $ownerRepository, UrlGeneratorInterface $urlGenerator, Request $request, EntityManagerInterface $em)
     {
-        $builder = $factory->createBuilder(OwnerType::class);
+        $owner = $ownerRepository->find($id);
 
+        $form = $this->createForm(ConfirmType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+
+            $remove = $form->getData();
+
+            if($remove['confirm'] === true) {
+                // $em->remove($owner);
+                $em->flush();
+
+                return $this->render('owner/success.html.twig', [
+                    'message' => "Le propriétaire a bien été supprimé de la base de données.",
+                    'urlGenerator' => $urlGenerator
+                ]);
+            }
+
+
+        }
+
+        $formView = $form->createView();
+
+        return $this->render('owner/remove.html.twig', [
+            'formView' => $formView,
+            'urlGenerator' => $urlGenerator,
+            'owner' => $owner
+        ]);
 
     }
 
