@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Owner;
+use App\Form\DataTransformer\UppercaseTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -11,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class OwnerType extends AbstractType
 {
@@ -73,7 +77,9 @@ class OwnerType extends AbstractType
                 ],
                 'required' => false
             ]);
-        ;
+
+        $builder->get('lastName')->addModelTransformer(new UppercaseTransformer);
+        $builder->get('firstName')->addModelTransformer(new UppercaseTransformer);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -68,12 +68,16 @@ class OwnerController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $owner = $form->getData();
             $owner->setCreatedAt(new DateTime());
             $em->persist($owner);
             $em->flush();
+
+            return $this->redirectToRoute('owner_show', [
+                'id' => $owner->getId()
+            ]);
 
         }
 
@@ -83,6 +87,16 @@ class OwnerController extends AbstractController
             'formView' => $formView,
             'urlGenerator' => $urlGenerator
         ]);
+    }
+
+    /**
+     * @Route("/owner/{id}/remove", name="owner_remove")
+     */
+    public function remove($id, FormFactoryInterface $factory, UrlGeneratorInterface $urlGenerator, Request $request, EntityManagerInterface $em)
+    {
+        $builder = $factory->createBuilder(OwnerType::class);
+
+
     }
 
     /**
@@ -112,7 +126,7 @@ class OwnerController extends AbstractController
         ]);
 
         if (!$owner) {
-            throw $this->createNotFoundException("Le produit demandé n'existe pas");
+            throw $this->createNotFoundException("Le propriétaire demandé n'existe pas");
         }
 
         return $this->render('owner/show.html.twig', [

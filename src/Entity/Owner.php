@@ -49,19 +49,19 @@ class Owner
 
     /**
      * @ORM\Column(type="string", length=6, nullable=true)
-     * @Assert\Regex("/^(([0-8][0-9])|(9[0-5]))[0-9]{3}$/", message="Vous n'avez pas entré un code postal valide")
+     * @Assert\Regex("/^((0[1-9])|([1-8][0-9])|(9[0-8])|(2A)|(2B))[0-9]{3}$/", message="Vous n'avez pas entré un code postal valide")
      */
     private $zip;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
-     * @Assert\Length(min=10, max=10, minMessage="Le numéro de téléphone doit comporter 10 chiffres", maxMessage="Le numéro de téléphone doit comporter 10 chiffres")
+     * @Assert\Regex("/^0[1-9]([-. ]?[0-9]{2}){4}$/", message="Le numéro de téléphone n'est pas valide")
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Regex("/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/", message="Le mail n'est pas conforme")
+     * @Assert\Regex("/^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/", message="Le mail n'est pas valide")
      * @Assert\Length(max=255, maxMessage="L'adresse mail ne doit pas excéder 255 caractères")
      */
     private $mail;
