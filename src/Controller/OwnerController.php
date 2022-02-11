@@ -91,9 +91,9 @@ class OwnerController extends AbstractController
     }
 
     /**
-     * @Route("/owner/{id}/remove", name="owner_remove")
+     * @Route("/owner/{id}/retire", name="owner_retire")
      */
-    public function remove($id, OwnerRepository $ownerRepository, UrlGeneratorInterface $urlGenerator, Request $request, EntityManagerInterface $em)
+    public function retire($id, OwnerRepository $ownerRepository, UrlGeneratorInterface $urlGenerator, Request $request, EntityManagerInterface $em)
     {
         $owner = $ownerRepository->find($id);
 
@@ -106,11 +106,11 @@ class OwnerController extends AbstractController
             $remove = $form->getData();
 
             if($remove['confirm'] === true) {
-                $em->remove($owner);
+                $owner->setRetired(true);
                 $em->flush();
 
                 return $this->render('shared/success.html.twig', [
-                    'message' => "Le propriétaire a bien été supprimé de la base de données.",
+                    'message' => "Le propriétaire a bien été archivé.",
                     'urlGenerator' => $urlGenerator
                 ]);
             }
@@ -120,7 +120,7 @@ class OwnerController extends AbstractController
 
         $formView = $form->createView();
 
-        return $this->render('owner/remove.html.twig', [
+        return $this->render('owner/retire.html.twig', [
             'formView' => $formView,
             'urlGenerator' => $urlGenerator,
             'owner' => $owner
@@ -133,7 +133,7 @@ class OwnerController extends AbstractController
      */
     public function list(OwnerRepository $ownerRepository, UrlGeneratorInterface $urlGenerator)
     {
-        $owners = $ownerRepository->findBy([], ['lastName' => 'ASC'], null);
+        $owners = $ownerRepository->findBy(['retired' => false], ['lastName' => 'ASC'], null);
 
         if (!$owners) {
             throw $this->createNotFoundException("Aucune donnée à afficher");

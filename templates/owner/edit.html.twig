@@ -41,7 +41,7 @@
 
 	<a href="{{urlGenerator.generate('owner_list')}}" class="btn btn-primary">Retour</a>
 	<button type="submit" class="btn btn-success">Enregistrer</button>
-	<a href="{{urlGenerator.generate('owner_remove', {'id': owner.id})}}" class="btn btn-danger">Supprimer</a>
+	<a href="{{urlGenerator.generate('owner_retire', {'id': owner.id})}}" class="btn btn-danger">Archiver</a>
 
 	{{ form_end(formView)}}
 {% endblock %}

@@ -13,7 +13,7 @@ class ConfirmType extends AbstractType
     {
         $builder
             ->add('confirm', CheckboxType::class, [
-                'label' => 'La suppression est définitive. Etes-vous sûr ?'
+                'label' => 'Etes-vous sûr ?'
             ])
         ;
     }
