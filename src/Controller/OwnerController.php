@@ -106,10 +106,10 @@ class OwnerController extends AbstractController
             $remove = $form->getData();
 
             if($remove['confirm'] === true) {
-                // $em->remove($owner);
+                $em->remove($owner);
                 $em->flush();
 
-                return $this->render('owner/success.html.twig', [
+                return $this->render('shared/success.html.twig', [
                     'message' => "Le propriétaire a bien été supprimé de la base de données.",
                     'urlGenerator' => $urlGenerator
                 ]);

@@ -87,6 +87,11 @@ class Owner
      */
     private $rents;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $retired;
+
     public function __construct()
     {
         $this->apartments = new ArrayCollection();
@@ -262,6 +267,18 @@ class Owner
                 $rent->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRetired(): ?bool
+    {
+        return $this->retired;
+    }
+
+    public function setRetired(bool $retired): self
+    {
+        $this->retired = $retired;
 
         return $this;
     }

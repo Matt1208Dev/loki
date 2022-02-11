@@ -36,7 +36,7 @@ class Apartment
 
     /**
      * @ORM\ManyToOne(targetEntity=Owner::class, inversedBy="apartments")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $owner;
 
