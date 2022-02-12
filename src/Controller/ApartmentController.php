@@ -15,8 +15,8 @@ class ApartmentController extends AbstractController
      */
     public function list(ApartmentRepository $apartmentRepository, UrlGeneratorInterface $urlGenerator): Response
     {
-        $apartments = $apartmentRepository->findOneBy([], ['owner' => 'ASC'], null);
-
+        $apartments = $apartmentRepository->findAll([], ['owner' => 'ASC'], null);
+ 
         return $this->render('apartment/list.html.twig', [
             'controller_name' => 'ApartmentController',
             'apartments' => $apartments,
