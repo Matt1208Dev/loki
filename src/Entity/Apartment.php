@@ -38,6 +38,7 @@ class Apartment
 
     /**
      * @ORM\Column(type="string", length=6)
+     * @Assert\NotBlank(message="Le code postal est obligatoire")
      * @Assert\Regex("/^((0[1-9])|([1-8][0-9])|(9[0-8])|(2A)|(2B))[0-9]{3}$/", message="Vous n'avez pas entré un code postal valide")
      */
     private $zip;
@@ -45,6 +46,7 @@ class Apartment
     /**
      * @ORM\ManyToOne(targetEntity=Owner::class, inversedBy="apartments")
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\NotBlank(message="La sélection d'un propriétaire est obligatoire")
      */
     private $owner;
 

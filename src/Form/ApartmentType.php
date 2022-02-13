@@ -39,15 +39,17 @@ class ApartmentType extends AbstractType
                 'required' => false
             ])
             ->add('owner', EntityType::class, [
-                'class' => Owner::class,
                 'label' => 'Propriétaire',
+                'placeholder' => '-- Sélectionner un propriétaire --',
+                'class' => Owner::class,
                 'query_builder' => function (OwnerRepository $ownerRepository) {
-                    return $ownerRepository->createQueryBuilder('u')
-                        ->orderBy('u.lastName', 'ASC');
+                    return $ownerRepository->createQueryBuilder('o')
+                        ->orderBy('o.lastName', 'ASC');
                 },
                 'choice_label' => function (Owner $owner) {
                     return $owner->getLastName() . " " . $owner->getFirstName();
-                }
+                },
+                'required' => false
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'Commentaire',

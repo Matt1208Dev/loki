@@ -43,10 +43,11 @@ class ApartmentController extends AbstractController
             $em->persist($apartment);
             $em->flush();
 
-            return $this->redirectToRoute('apartment_show', [
-                'id' => $apartment->getId()
+            return $this->render('shared/success.html.twig', [
+                'message' => "L'appartement a été ajouté.",
+                'urlGenerator' => $urlGenerator,
+                'route' => 'apartment_list'
             ]);
-
         }
 
         $formView = $form->createView();

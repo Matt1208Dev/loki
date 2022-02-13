@@ -28,10 +28,10 @@
 	{# {{ form_widget(formView)}} #}
 	<div class="row">
 		<div class="col">
+			{{ form_row(formView.owner)}}
 			{{ form_row(formView.street)}}
 			{{ form_row(formView.zip)}}
 			{{ form_row(formView.city)}}
-			{{ form_row(formView.owner)}}
 			{{ form_row(formView.comment)}}
 		</div>
 	</div>
