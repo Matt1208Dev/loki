@@ -48,7 +48,8 @@ class ApartmentType extends AbstractType
                 'choice_label' => function (Owner $owner) {
                     return $owner->getLastName() . " " . $owner->getFirstName();
                 }
-            ])->add('comment', TextareaType::class, [
+            ])
+            ->add('comment', TextareaType::class, [
                 'label' => 'Commentaire',
                 'attr' => [
                     'placeholder' => 'Complément d\'adresse, observations...'
