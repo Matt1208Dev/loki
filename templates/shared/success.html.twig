@@ -1,12 +1,12 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-    Suppression réussie
+    {{ message }}
 {% endblock %}
 
 {% block body %}
-    <h1> {{ message }} </h1>
+    <h1 class="mb-3"> {{ message }} </h1>
 
-	<a href="{{urlGenerator.generate('owner_list')}}" class="btn btn-primary">Retour à la liste</a>
+	<a href="{{urlGenerator.generate(route)}}" class="btn btn-primary">Retour à la liste</a>
 
 {% endblock %}

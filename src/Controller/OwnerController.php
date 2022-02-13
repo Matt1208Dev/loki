@@ -111,7 +111,8 @@ class OwnerController extends AbstractController
 
                 return $this->render('shared/success.html.twig', [
                     'message' => "Le propriétaire a bien été archivé.",
-                    'urlGenerator' => $urlGenerator
+                    'urlGenerator' => $urlGenerator,
+                    'route' => 'owner_list'
                 ]);
             }
 

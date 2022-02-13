@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Apartment;
+use App\Form\ApartmentType;
 use App\Repository\ApartmentRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -15,22 +19,42 @@ class ApartmentController extends AbstractController
      */
     public function list(ApartmentRepository $apartmentRepository, UrlGeneratorInterface $urlGenerator): Response
     {
-        $apartments = $apartmentRepository->findAll([], ['owner' => 'ASC'], null);
- 
+        $apartments = $apartmentRepository->findBy([], ['owner' => 'ASC'], null);
+
         return $this->render('apartment/list.html.twig', [
-            'controller_name' => 'ApartmentController',
             'apartments' => $apartments,
             'urlGenerator' => $urlGenerator
         ]);
     }
 
     /**
-     * @Route("/apartment", name="apartment_create")
+     * @Route("/apartment/create", name="apartment_create")
      */
-    public function create(): Response
+    public function create(UrlGeneratorInterface $urlGenerator, Request $request, EntityManagerInterface $em): Response
     {
-        return $this->render('apartment/index.html.twig', [
-            'controller_name' => 'ApartmentController',
+        $form = $this->createForm(ApartmentType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $apartment = $form->getData();
+            $apartment->setCreatedAt(new \DateTime());
+            $em->persist($apartment);
+            $em->flush();
+
+            return $this->render('shared/success.html.twig', [
+                'message' => "L'appartement a été ajouté.",
+                'urlGenerator' => $urlGenerator,
+                'route' => 'apartment_list'
+            ]);
+        }
+
+        $formView = $form->createView();
+
+        return $this->render('apartment/create.html.twig', [
+            'formView' => $formView,
+            'urlGenerator' => $urlGenerator
         ]);
     }
 }
