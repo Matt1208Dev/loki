@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Apartment;
+use App\Form\ApartmentType;
 use App\Repository\ApartmentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,21 +18,25 @@ class ApartmentController extends AbstractController
     public function list(ApartmentRepository $apartmentRepository, UrlGeneratorInterface $urlGenerator): Response
     {
         $apartments = $apartmentRepository->findAll([], ['owner' => 'ASC'], null);
- 
+
         return $this->render('apartment/list.html.twig', [
-            'controller_name' => 'ApartmentController',
             'apartments' => $apartments,
             'urlGenerator' => $urlGenerator
         ]);
     }
 
     /**
-     * @Route("/apartment", name="apartment_create")
+     * @Route("/apartment/create", name="apartment_create")
      */
-    public function create(): Response
+    public function create(UrlGeneratorInterface $urlGenerator): Response
     {
-        return $this->render('apartment/index.html.twig', [
-            'controller_name' => 'ApartmentController',
+        $form = $this->createForm(ApartmentType::class);
+
+        $formView = $form->createView();
+
+        return $this->render('apartment/create.html.twig', [
+            'formView' => $formView,
+            'urlGenerator' => $urlGenerator
         ]);
     }
 }
