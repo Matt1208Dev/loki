@@ -23,7 +23,7 @@
 	{{ form_errors(formView)}}
 
 	{{ form_widget(formView)}}
-	<a class="btn btn-primary" href="{{urlGenerator.generate('apartment_edit', {'id': apartment.id }) }}">Retour</a>
-	<button type="submit" class="btn btn-danger">Je confirme</button>
+	<a class="btn btn-primary" href="{{urlGenerator.generate('apartment_edit', {'id': apartment.id }) }}"><i class="fa-regular fa-arrow-left"></i> Retour</a>
+	<button type="submit" class="btn btn-outline-danger border-danger">Je confirme <i class="fa-solid fa-check"></i></button>
 	{{ form_end(formView)}}
 {% endblock body %}

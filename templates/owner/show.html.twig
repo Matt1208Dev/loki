@@ -61,9 +61,9 @@
 				</div>
 			</div>
 
-			<a href="{{urlGenerator.generate('owner_list')}}" class="btn btn-primary">Retour</a>
+			<a href="{{urlGenerator.generate('owner_list')}}" class="btn btn-primary"><i class="fa-regular fa-arrow-left"></i> Retour</a>
 
-			<a href="{{urlGenerator.generate('owner_edit', {'id': owner.id})}}" class="btn btn-info">Editer</a>
+			<a href="{{urlGenerator.generate('owner_edit', {'id': owner.id})}}" class="btn btn-info">Editer <i class="fa-solid fa-pen-to-square"></i></a>
 
 		</div>
 
@@ -79,6 +79,7 @@
 						<p class="card-text">{{apartment.street}}</p>
 						<p class="card-text">{{apartment.zip}}</p>
 						<p class="card-text">{{apartment.city}}</p>
+						<a href="{{urlGenerator.generate('apartment_edit', {'id': apartment.id})}}" class="btn btn-sm btn-info">Editer <i class="fa-solid fa-pen-to-square"></i></a>
 					</div>
 				</div>
 			</div>
