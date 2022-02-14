@@ -65,6 +65,11 @@ class Apartment
      */
     private $comment;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $retired;
+
     public function __construct()
     {
         $this->rents = new ArrayCollection();
@@ -80,7 +85,7 @@ class Apartment
         return $this->street;
     }
 
-    public function setStreet(string $street): self
+    public function setStreet(?string $street): self
     {
         $this->street = $street;
 
@@ -92,7 +97,7 @@ class Apartment
         return $this->city;
     }
 
-    public function setCity(string $city): self
+    public function setCity(?string $city): self
     {
         $this->city = $city;
 
@@ -104,7 +109,7 @@ class Apartment
         return $this->zip;
     }
 
-    public function setZip(string $zip): self
+    public function setZip(?string $zip): self
     {
         $this->zip = $zip;
 
@@ -173,6 +178,18 @@ class Apartment
     public function setComment(?string $comment): self
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getRetired(): ?bool
+    {
+        return $this->retired;
+    }
+
+    public function setRetired(?bool $retired): self
+    {
+        $this->retired = $retired;
 
         return $this;
     }
