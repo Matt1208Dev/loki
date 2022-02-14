@@ -26,6 +26,7 @@
 						<th scope="col">Adresse</th>
 						<th scope="col">Code postal</th>
 						<th scope="col">Ville</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -39,6 +40,7 @@
 							<td>{{apartment.street}}</td>
 							<td>{{apartment.zip}}</td>
 							<td>{{apartment.city}}</td>
+							<td><a class="text-info text-decoration-none" href="{{urlGenerator.generate('apartment_edit', {'id': apartment.owner.id})}}">Editer <i class="fa-solid fa-pen-to-square"></i></a></td>
 						</tr>
 					{% endfor %}
 				</tbody>

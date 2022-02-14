@@ -57,4 +57,37 @@ class ApartmentController extends AbstractController
             'urlGenerator' => $urlGenerator
         ]);
     }
+
+    /**
+     * @Route("/apartment/{id}/edit", name="apartment_edit")
+     */
+    public function edit($id, ApartmentRepository $apartmentRepository, UrlGeneratorInterface $urlGenerator, Request $request, EntityManagerInterface $em): Response
+    {
+        $apartment = $apartmentRepository->find($id);
+
+        $form = $this->createForm(ApartmentType::class, $apartment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $apartment = $form->getData();
+            $apartment->setCreatedAt(new \DateTime());
+            $em->persist($apartment);
+            $em->flush();
+
+            return $this->render('shared/success.html.twig', [
+                'message' => "Les informations de l'appartement ont été mises à jour.",
+                'urlGenerator' => $urlGenerator,
+                'route' => 'apartment_list'
+            ]);
+        }
+
+        $formView = $form->createView();
+
+        return $this->render('apartment/edit.html.twig', [
+            'formView' => $formView,
+            'urlGenerator' => $urlGenerator
+        ]);
+    }
 }

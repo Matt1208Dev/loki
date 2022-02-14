@@ -34,7 +34,7 @@
 							<td scope="row">{{owner.lastName}}
 								{{owner.firstName}}</td>
 							<td>
-								<a class="text-info" href="{{urlGenerator.generate('owner_show', {'id': owner.id }) }}">Détails</a>
+								<a class="text-info text-decoration-none" href="{{urlGenerator.generate('owner_show', {'id': owner.id }) }}">Détails <i class="fa-solid fa-magnifying-glass"></i></a>
 							</td>
 						</tr>
 					{% endfor %}
