@@ -3,14 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Apartment;
+use App\Form\ConfirmType;
 use App\Form\ApartmentType;
 use App\Repository\ApartmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApartmentController extends AbstractController
 {
@@ -19,7 +20,7 @@ class ApartmentController extends AbstractController
      */
     public function list(ApartmentRepository $apartmentRepository, UrlGeneratorInterface $urlGenerator): Response
     {
-        $apartments = $apartmentRepository->findBy([], ['owner' => 'ASC'], null);
+        $apartments = $apartmentRepository->findBy(['retired' => false], ['owner' => 'ASC'], null);
 
         return $this->render('apartment/list.html.twig', [
             'apartments' => $apartments,
@@ -70,10 +71,7 @@ class ApartmentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $apartment = $form->getData();
-            $apartment->setCreatedAt(new \DateTime());
-            $em->persist($apartment);
             $em->flush();
 
             return $this->render('shared/success.html.twig', [
@@ -86,8 +84,45 @@ class ApartmentController extends AbstractController
         $formView = $form->createView();
 
         return $this->render('apartment/edit.html.twig', [
+            'apartment' => $apartment,
             'formView' => $formView,
             'urlGenerator' => $urlGenerator
+        ]);
+    }
+
+    /**
+     * @Route("/apartment/{id}/retire", name="apartment_retire")
+     */
+    public function retire($id, ApartmentRepository $apartmentRepository, UrlGeneratorInterface $urlGenerator, Request $request, EntityManagerInterface $em)
+    {
+        $apartment = $apartmentRepository->find($id);
+
+        $form = $this->createForm(ConfirmType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+
+            $retired = $form->getData();
+
+            if ($retired['confirm'] === true) {
+                $apartment->setRetired(true);
+                $em->flush();
+
+                return $this->render('shared/success.html.twig', [
+                    'message' => "L'appartement a bien été archivé.",
+                    'urlGenerator' => $urlGenerator,
+                    'route' => 'apartment_list'
+                ]);
+            }
+        }
+
+        $formView = $form->createView();
+
+        return $this->render('apartment/retire.html.twig', [
+            'formView' => $formView,
+            'urlGenerator' => $urlGenerator,
+            'apartment' => $apartment
         ]);
     }
 }

@@ -10,7 +10,7 @@
 			<a href="{{path('homepage')}}">Accueil</a>
 		</li>
 		<li class="breadcrumb-item">
-			<a href="{{path('owner_list')}}">Appartements</a>
+			<a href="{{path('apartment_list')}}">Appartements</a>
 		</li>
 	</ol>
 
@@ -40,7 +40,7 @@
 							<td>{{apartment.street}}</td>
 							<td>{{apartment.zip}}</td>
 							<td>{{apartment.city}}</td>
-							<td><a class="text-info text-decoration-none" href="{{urlGenerator.generate('apartment_edit', {'id': apartment.owner.id})}}">Editer <i class="fa-solid fa-pen-to-square"></i></a></td>
+							<td><a class="text-info text-decoration-none" href="{{urlGenerator.generate('apartment_edit', {'id': apartment.id})}}">Editer <i class="fa-solid fa-pen-to-square"></i></a></td>
 						</tr>
 					{% endfor %}
 				</tbody>
