@@ -36,6 +36,7 @@
 
 	<a href="{{urlGenerator.generate('apartment_list')}}" class="btn btn-primary">Retour</a>
 	<button type="submit" class="btn btn-success">Enregistrer</button>
+	<a href="{{urlGenerator.generate('apartment_retire', {'id': apartment.id})}}" class="btn btn-danger">Archiver</a>
 
 	{{ form_end(formView)}}
 {% endblock %}

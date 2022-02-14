@@ -90,4 +90,40 @@ class ApartmentController extends AbstractController
             'urlGenerator' => $urlGenerator
         ]);
     }
+
+    /**
+     * @Route("/apartment/{id}/retire", name="apartment_retire")
+     */
+    public function retire($id, ApartmentRepository $apartmentRepository, UrlGeneratorInterface $urlGenerator, Request $request, EntityManagerInterface $em)
+    {
+        $apartment = $apartmentRepository->find($id);
+
+        $form = $this->createForm(ConfirmType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+
+            $retire = $form->getData();
+
+            if ($retire['confirm'] === true) {
+                // $apartment->setRetired(true);
+                $em->flush();
+
+                return $this->render('shared/success.html.twig', [
+                    'message' => "Le propriétaire a bien été archivé.",
+                    'urlGenerator' => $urlGenerator,
+                    'route' => 'owner_list'
+                ]);
+            }
+        }
+
+        $formView = $form->createView();
+
+        return $this->render('owner/retire.html.twig', [
+            'formView' => $formView,
+            'urlGenerator' => $urlGenerator,
+            'apartment' => $apartment
+        ]);
+    }
 }
