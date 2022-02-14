@@ -155,12 +155,14 @@ class OwnerController extends AbstractController
             'id' => $id
         ]);
 
+        $apartments = $owner->getApartments()->toArray();
+        
         if (!$owner) {
             throw $this->createNotFoundException("Le propriétaire demandé n'existe pas");
         }
-
         return $this->render('owner/show.html.twig', [
             'owner' => $owner,
+            'apartments' => $apartments,
             'urlGenerator' => $urlGenerator
         ]);
     }
