@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#"><i class="fa-solid fa-key"></i> Loki</a>
+    <a class="navbar-brand" href="{{path('homepage')}}"><i class="fa-solid fa-key"></i> Loki</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -8,18 +8,18 @@
     <div class="collapse navbar-collapse" id="navbarColor03">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Home</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="{{path('owner_list')}}">Propriétaires</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{path('apartment_list')}}">Appartements</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Services</a>
+          <a class="nav-link" href="{{path('service_list')}}">Services</a>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Facturation</a>
+        </li>
+        {# <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Gestion</a>
 
           <div class="dropdown-menu">
@@ -27,7 +27,7 @@
             <a class="dropdown-item" href="#">Ajouter un appartement</a>
             <a class="dropdown-item" href="#">Ajouter un service</a>
           </div>
-        </li>
+        </li> #}
       </ul>
       <form class="d-flex">
         <input class="form-control me-sm-2" type="text" placeholder="Search">
