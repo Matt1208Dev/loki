@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+{# {% form_theme formView 'bootstrap_5_layout.html.twig' %} #}
+
+{% block title %}
+	Création d'un nouveau service
+{% endblock %}
+
+{% block body %}
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a href="{{path('homepage')}}">Accueil</a>
+		</li>
+		<li class="breadcrumb-item">
+			<a href="{{path('owner_list')}}">Services</a>
+		</li>
+		<li class="breadcrumb-item active">Ajout</li>
+	</ol>
+
+	<h1 class="mb-4">Ajout d'un nouveau service</h1>
+
+	{# {{ form (formView)}} #}
+
+	{{ form_start(formView)}}
+
+	{{ form_errors(formView)}}
+
+	{# {{ form_widget(formView)}} #}
+	<div class="row">
+		<div class="col">
+			{{ form_row(formView.label)}}
+			{{ form_row(formView.price)}}
+		</div>
+	</div>
+
+	<a href="{{urlGenerator.generate('service_list')}}" class="btn btn-primary"><i class="fa-regular fa-arrow-left"></i> Retour</a>
+	<button type="submit" class="btn btn-success">Créer <i class="fa-solid fa-floppy-disk"></i></button>
+
+	{{ form_end(formView)}}
+{% endblock %}

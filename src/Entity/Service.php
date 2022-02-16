@@ -6,7 +6,7 @@ use App\Repository\ServiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=ServiceRepository::class)
  */
@@ -21,11 +21,14 @@ class Service
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="Le libellé est obligatoire.")
+     * @Assert\Length(min=1, max=100, maxMessage="Le libellé ne doit pas dépasser 100 caractères.")
      */
     private $label;
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @Assert\NotBlank(message="La saisie d'un prix est obligatoire.")
      */
     private $price;
 

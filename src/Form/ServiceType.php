@@ -26,6 +26,7 @@ class ServiceType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Entrez le tarif'
                 ],
+                'invalid_message' =>'La saisie est invalide. Veuillez réessayer.',
                 'required' => false
             ]);
     }
