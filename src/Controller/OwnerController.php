@@ -136,8 +136,10 @@ class OwnerController extends AbstractController
     {
         $owners = $ownerRepository->findBy(['retired' => false], ['lastName' => 'ASC'], null);
 
-        if (!$owners) {
-            throw $this->createNotFoundException("Aucune donnée à afficher");
+        if(!$owners) {
+            return $this->render('owner/no_data.html.twig', [
+                'urlGenerator' => $urlGenerator
+            ]); 
         }
 
         return $this->render('owner/list.html.twig', [
