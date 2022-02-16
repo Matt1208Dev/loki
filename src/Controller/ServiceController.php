@@ -21,6 +21,12 @@ class ServiceController extends AbstractController
     {
         $services = $serviceRepository->findBy(['retired' => false], ['label' => 'ASC']);
 
+        if(!$services) {
+            return $this->render('service/no_data.html.twig', [
+                'urlGenerator' => $urlGenerator
+            ]); 
+        }
+
         return $this->render('service/list.html.twig', [
             'urlGenerator' => $urlGenerator,
             'services' => $services

@@ -111,7 +111,7 @@ class Service
         return $this->retired;
     }
 
-    public function setRetired(?bool $retired): self
+    public function setRetired(bool $retired): self
     {
         $this->retired = $retired;
 

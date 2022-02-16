@@ -4,10 +4,11 @@ namespace App\Form;
 
 use App\Entity\Service;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class ServiceType extends AbstractType
 {
@@ -28,6 +29,9 @@ class ServiceType extends AbstractType
                 ],
                 'invalid_message' =>'La saisie est invalide. Veuillez réessayer.',
                 'required' => false
+            ])
+            ->add('retired', HiddenType::class, [
+                'empty_data' => false
             ]);
     }
 
