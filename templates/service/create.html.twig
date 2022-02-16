@@ -3,7 +3,7 @@
 {# {% form_theme formView 'bootstrap_5_layout.html.twig' %} #}
 
 {% block title %}
-	Création d'une fiche Appartement
+	Création d'un nouveau service
 {% endblock %}
 
 {% block body %}
@@ -12,12 +12,12 @@
 			<a href="{{path('homepage')}}">Accueil</a>
 		</li>
 		<li class="breadcrumb-item">
-			<a href="{{path('owner_list')}}">Appartement</a>
+			<a href="{{path('service_list')}}">Services</a>
 		</li>
 		<li class="breadcrumb-item active">Ajout</li>
 	</ol>
 
-	<h1 class="mb-4">Ajouter un nouvel appartement</h1>
+	<h1 class="mb-4">Ajout d'un nouveau service</h1>
 
 	{# {{ form (formView)}} #}
 
@@ -28,26 +28,13 @@
 	{# {{ form_widget(formView)}} #}
 	<div class="row">
 		<div class="col">
-			{{ form_row(formView.owner)}}
-			{{ form_row(formView.street)}}
-			{{ form_row(formView.zip)}}
-			{{ form_row(formView.city)}}
-			{{ form_row(formView.comment)}}
+			{{ form_row(formView.label)}}
+			{{ form_row(formView.price)}}
 		</div>
 	</div>
 
-	<a href="{{urlGenerator.generate('apartment_list')}}" class="btn btn-primary"><i class="fa-regular fa-arrow-left"></i> Retour</a>
+	<a href="{{urlGenerator.generate('service_list')}}" class="btn btn-primary"><i class="fa-regular fa-arrow-left"></i> Retour</a>
 	<button type="submit" class="btn btn-success">Créer <i class="fa-solid fa-floppy-disk"></i></button>
 
 	{{ form_end(formView)}}
 {% endblock %}
-
-{# {% block form_row %}
-
-	<div class="form-group">
-		{{ form_label(form) }}
-		{{ form_widget(form, {'attr': {'class' : 'form-control'} }) }}
-		{{ form_help(form) }}
-		{{ form_errors(form) }}
-	</div>
-{% endblock %} #}

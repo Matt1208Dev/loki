@@ -2,7 +2,7 @@
 
 
 {% block title %}
-	Archivage de l'appartement {{apartment.id}}
+	Archivage du service : {{service.label}}
 {% endblock %}
 
 {% block body %}
@@ -11,19 +11,19 @@
 			<a href="{{path('homepage')}}">Accueil</a>
 		</li>
 		<li class="breadcrumb-item">
-			<a href="{{path('apartment_list')}}">Appartements</a>
+			<a href="{{path('service_list')}}">Services</a>
 		</li>
 		<li class="breadcrumb-item active">Archivage</li>
 	</ol>
 
-	<h1 class="mb-4">Archivage de l'appartement {{apartment.id}}</h1>
+	<h1 class="mb-4">Archivage du service : {{service.label}}</h1>
 
 	{{ form_start(formView)}}
 
 	{{ form_errors(formView)}}
 
 	{{ form_widget(formView)}}
-	<a class="btn btn-primary" href="{{urlGenerator.generate('apartment_edit', {'id': apartment.id }) }}"><i class="fa-regular fa-arrow-left"></i> Retour</a>
+	<a class="btn btn-primary" href="{{urlGenerator.generate('owner_list') }}"><i class="fa-regular fa-arrow-left"></i> Retour</a>
 	<button type="submit" class="btn btn-outline-danger border-danger">Je confirme <i class="fa-solid fa-check"></i></button>
 	{{ form_end(formView)}}
 {% endblock body %}
