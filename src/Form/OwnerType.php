@@ -3,31 +3,32 @@
 namespace App\Form;
 
 use App\Entity\Owner;
-use App\Form\DataTransformer\UppercaseTransformer;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
+use App\Form\DataTransformer\UppercaseTransformer;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 
 class OwnerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('lastName', TextType::class, [
-            'label' => 'Nom',
-            'attr' => [
-                'placeholder' => 'Entrez le nom'
-            ],
-            'required' => false
-        ])
+            ->add('lastName', TextType::class, [
+                'label' => 'Nom',
+                'attr' => [
+                    'placeholder' => 'Entrez le nom'
+                ],
+                'required' => false
+            ])
             ->add('firstName', TextType::class, [
                 'label' => 'Prénom',
                 'attr' => [
@@ -76,6 +77,9 @@ class OwnerType extends AbstractType
                     'placeholder' => 'Complément d\'adresse, observations...'
                 ],
                 'required' => false
+            ])
+            ->add('retired', HiddenType::class, [
+                'empty_data' => false
             ]);
 
         $builder->get('lastName')->addModelTransformer(new UppercaseTransformer);

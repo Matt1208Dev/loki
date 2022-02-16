@@ -16,7 +16,7 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        for ($o = 0; $o < 20; $o++) {
+        for ($o = 0; $o < 10; $o++) {
             $owner = new Owner;
             $owner->setFirstName($faker->firstName())
                 ->setLastName($faker->lastName())
@@ -29,7 +29,7 @@ class AppFixtures extends Fixture
                 ->setCreatedAt($faker->dateTimeBetween('-6 months'))
                 ->setRetired(false);
 
-                for ($a = 0; $a < rand(1, 4); $a++) {
+                for ($a = 0; $a < rand(1, 3); $a++) {
                     $apartment = new Apartment;
                     $apartment->setStreet($faker->streetAddress())
                         ->setZip($faker->postcode())
@@ -44,13 +44,13 @@ class AppFixtures extends Fixture
             $manager->persist($owner);
         }
 
-        for ($s = 0; $s < 10; $s++) {
-            $service = new Service;
-            $service->setLabel($faker->word())
-                ->setPrice($faker->randomFloat(2, 5, 30));
+        // for ($s = 0; $s < 10; $s++) {
+        //     $service = new Service;
+        //     $service->setLabel($faker->word())
+        //         ->setPrice($faker->randomFloat(2, 5, 30));
 
-            $manager->persist($service);
-        }
+        //     $manager->persist($service);
+        // }
 
         $manager->flush();
     }

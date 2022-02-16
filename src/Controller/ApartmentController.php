@@ -22,6 +22,12 @@ class ApartmentController extends AbstractController
     {
         $apartments = $apartmentRepository->findBy(['retired' => false], ['owner' => 'ASC'], null);
 
+        if(!$apartments) {
+            return $this->render('apartment/no_data.html.twig', [
+                'urlGenerator' => $urlGenerator
+            ]); 
+        }
+
         return $this->render('apartment/list.html.twig', [
             'apartments' => $apartments,
             'urlGenerator' => $urlGenerator

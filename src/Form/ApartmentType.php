@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ApartmentType extends AbstractType
@@ -57,6 +58,9 @@ class ApartmentType extends AbstractType
                     'placeholder' => 'Complément d\'adresse, observations...'
                 ],
                 'required' => false
+            ])
+            ->add('retired', HiddenType::class, [
+                'empty_data' => false
             ]);
     }
 

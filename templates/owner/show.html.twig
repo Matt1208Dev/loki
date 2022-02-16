@@ -69,12 +69,12 @@
 
 	</div>
 
-	<h3>Appartements</h3>
+	<h3 class="mb-3">Appartements</h3>
 	<div class="row">
 		{% for apartment in apartments %}
 			<div class="col-md-4">
 				<div class="card text-white bg-primary mb-3">
-					<div class="card-header">Appartement ID {{apartment.id}}</div>
+					<div class="card-header">Référence ID {{apartment.id}}</div>
 					<div class="card-body">
 						<p class="card-text">{{apartment.street}}</p>
 						<p class="card-text">{{apartment.zip}}</p>
