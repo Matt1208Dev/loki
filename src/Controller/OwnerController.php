@@ -103,9 +103,9 @@ class OwnerController extends AbstractController
 
         if ($form->isSubmitted()) {
 
-            $remove = $form->getData();
+            $retire = $form->getData();
 
-            if($remove['confirm'] === true) {
+            if($retire['confirm'] === true) {
                 $owner->setRetired(true);
                 $em->flush();
 

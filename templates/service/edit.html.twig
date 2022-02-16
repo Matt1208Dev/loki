@@ -3,7 +3,7 @@
 {# {% form_theme formView 'bootstrap_5_layout.html.twig' %} #}
 
 {% block title %}
-	Création d'un nouveau service
+	Edition d'un service
 {% endblock %}
 
 {% block body %}
@@ -14,10 +14,10 @@
 		<li class="breadcrumb-item">
 			<a href="{{path('service_list')}}">Services</a>
 		</li>
-		<li class="breadcrumb-item active">Ajout</li>
+		<li class="breadcrumb-item active">Edition</li>
 	</ol>
 
-	<h1 class="mb-4">Ajout d'un nouveau service</h1>
+	<h1 class="mb-4">Edition d'un service</h1>
 
 	{# {{ form (formView)}} #}
 
@@ -34,7 +34,8 @@
 	</div>
 
 	<a href="{{urlGenerator.generate('service_list')}}" class="btn btn-primary"><i class="fa-regular fa-arrow-left"></i> Retour</a>
-	<button type="submit" class="btn btn-success">Créer <i class="fa-solid fa-floppy-disk"></i></button>
+	<button type="submit" class="btn btn-success">Enregistrer <i class="fa-solid fa-floppy-disk"></i></button>
+	<a href="{{urlGenerator.generate('service_retire', {'id': service.id})}}" class="btn btn-outline-danger border-danger">Archiver <i class="fa-solid fa-box-archive"></i></a>
 
 	{{ form_end(formView)}}
 {% endblock %}

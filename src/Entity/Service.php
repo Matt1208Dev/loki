@@ -37,6 +37,11 @@ class Service
      */
     private $rentRows;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $retired;
+
     public function __construct()
     {
         $this->rentRows = new ArrayCollection();
@@ -97,6 +102,18 @@ class Service
                 $rentRow->setService(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRetired(): ?bool
+    {
+        return $this->retired;
+    }
+
+    public function setRetired(?bool $retired): self
+    {
+        $this->retired = $retired;
 
         return $this;
     }

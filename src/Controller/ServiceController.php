@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\ConfirmType;
 use App\Form\ServiceType;
 use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +19,7 @@ class ServiceController extends AbstractController
      */
     public function list(ServiceRepository $serviceRepository, UrlGeneratorInterface $urlGenerator): Response
     {
-        $services = $serviceRepository->findBy([], ['label' => 'ASC']);
+        $services = $serviceRepository->findBy(['retired' => false], ['label' => 'ASC']);
 
         return $this->render('service/list.html.twig', [
             'urlGenerator' => $urlGenerator,
@@ -29,20 +30,47 @@ class ServiceController extends AbstractController
     /**
      * @Route("/service/{id}/edit", name="service_edit")
      */
-    public function edit() {
+    public function edit($id, ServiceRepository $serviceRepository, Request $request, UrlGeneratorInterface $urlGenerator, EntityManagerInterface $em)
+    {
 
+        $service = $serviceRepository->find($id);
+
+        $form = $this->createForm(ServiceType::class, $service);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $em->persist($data);
+            $em->flush();
+
+            return $this->render('shared/success.html.twig', [
+                'urlGenerator' => $urlGenerator,
+                'message' => 'Le service a été modifié.',
+                'route' => 'service_list'
+            ]);
+        }
+
+        $formView = $form->createView();
+
+        return $this->render('service/edit.html.twig', [
+            'service' => $service,
+            'urlGenerator' => $urlGenerator,
+            'formView' => $formView
+        ]);
     }
 
     /**
      * @Route("/service/create", name="service_create")
      */
-    public function create(UrlGeneratorInterface $urlGenerator, Request $request, EntityManagerInterface $em) {
+    public function create(UrlGeneratorInterface $urlGenerator, Request $request, EntityManagerInterface $em)
+    {
 
         $form = $this->createForm(ServiceType::class);
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $em->persist($data);
             $em->flush();
@@ -58,6 +86,42 @@ class ServiceController extends AbstractController
 
         return $this->render('service/create.html.twig', [
             'urlGenerator' => $urlGenerator,
+            'formView' => $formView
+        ]);
+    }
+
+    /**
+     * @Route("/service/{id}/retire", name="service_retire")
+     */
+    public function retire($id, ServiceRepository $serviceRepository, Request $request, EntityManagerInterface $em, UrlGeneratorInterface $urlGenerator)
+    {
+
+        $service = $serviceRepository->find($id);
+
+        $form = $this->createForm(ConfirmType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $retire = $form->getData();
+
+            if ($retire['confirm'] === true) {
+                $service->setRetired(true);
+                $em->flush();
+
+                return $this->render('shared/success.html.twig', [
+                    'urlGenerator' => $urlGenerator,
+                    'message' => 'Le service a été archivé',
+                    'route' => 'service_list'
+                ]);
+            }
+        }
+
+        $formView = $form->createView();
+
+        return $this->render('service/retire.html.twig', [
+            'urlGenerator' => $urlGenerator,
+            'service' => $service,
             'formView' => $formView
         ]);
     }
