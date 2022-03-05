@@ -2,19 +2,40 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Apartment;
+use Faker\Factory;
+use App\Entity\User;
 use App\Entity\Owner;
 use App\Entity\Service;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\Entity\Apartment;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Security;
 
 class AppFixtures extends Fixture
 {
+    protected $encoder;
+
+    public function __construct(UserPasswordHasherInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
+
+        $user = new User();
+
+        $hash = $this->encoder->hashPassword($user, "password");
+
+        $user->setEmail("allardphilippe@gmail.com")
+            ->setFullName("Philippe Allard")
+            ->setPassword($hash)
+            ->setRoles(['ROLE_ADMIN']);
+
+        $manager->persist($user);
 
         for ($o = 0; $o < 10; $o++) {
             $owner = new Owner;
@@ -29,17 +50,17 @@ class AppFixtures extends Fixture
                 ->setCreatedAt($faker->dateTimeBetween('-6 months'))
                 ->setRetired(false);
 
-                for ($a = 0; $a < rand(1, 3); $a++) {
-                    $apartment = new Apartment;
-                    $apartment->setStreet($faker->streetAddress())
-                        ->setZip($faker->postcode())
-                        ->setCity($faker->city())
-                        ->setOwner($owner)
-                        ->setCreatedAt($faker->dateTimeBetween('-2 months'))
-                        ->setRetired(false);
-        
-                    $manager->persist($apartment);
-                }
+            for ($a = 0; $a < rand(1, 3); $a++) {
+                $apartment = new Apartment;
+                $apartment->setStreet($faker->streetAddress())
+                    ->setZip($faker->postcode())
+                    ->setCity($faker->city())
+                    ->setOwner($owner)
+                    ->setCreatedAt($faker->dateTimeBetween('-2 months'))
+                    ->setRetired(false);
+
+                $manager->persist($apartment);
+            }
 
             $manager->persist($owner);
         }
