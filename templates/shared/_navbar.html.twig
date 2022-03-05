@@ -19,6 +19,11 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Facturation</a>
         </li>
+        <li class="nav-item">
+          {% if app.user %}
+            <a class="nav-link text-dark" href="{{ path('app_logout') }}">Déconnexion</a>
+          {% endif %}
+        </li>
         {# <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Gestion</a>
 

@@ -21,11 +21,11 @@ class SecurityController extends AbstractController
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
         // }
-
+        // dd($translator->translate("Hello World"));
         // get the login error if there is one
         /** @var BadCredentialsException */
         $error = $authenticationUtils->getLastAuthenticationError();
-        dd($error, $error->getMessage());
+        // dd($error, $error->getMessage());
             // dd($error);
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
