@@ -1,43 +1,47 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{{path('homepage')}}"><i class="fa-solid fa-key"></i> Loki</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="{{path('homepage')}}">
+			<i class="fa-solid fa-key"></i>
+			Loki</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-    <div class="collapse navbar-collapse" id="navbarColor03">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{{path('owner_list')}}">Propriétaires</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{path('apartment_list')}}">Appartements</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{path('service_list')}}">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Facturation</a>
-        </li>
-        <li class="nav-item">
-          {% if app.user %}
-            <a class="nav-link text-dark" href="{{ path('app_logout') }}">Déconnexion</a>
-          {% endif %}
-        </li>
-        {# <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Gestion</a>
-
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Ajouter un propriétaire</a>
-            <a class="dropdown-item" href="#">Ajouter un appartement</a>
-            <a class="dropdown-item" href="#">Ajouter un service</a>
-          </div>
-        </li> #}
-      </ul>
-      <form class="d-flex">
-        <input class="form-control me-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
+		<div class="collapse navbar-collapse" id="navbarColor03">
+			<ul class="navbar-nav me-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="{{path('owner_list')}}">Propriétaires</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{path('apartment_list')}}">Appartements</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{path('service_list')}}">Services</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Facturation</a>
+				</li>
+				<li class="nav-item">
+					{% if app.user %}
+						<a class="nav-link" href="{{ path('security_logout') }}">Déconnexion</a>
+					{% else %}
+						<a class="nav-link" href="{{ path('security_login') }}">Connexion</a>
+					{% endif %}
+				</li>
+				{# <li class="nav-item dropdown">
+				          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Gestion</a>
+				
+				          <div class="dropdown-menu">
+				            <a class="dropdown-item" href="#">Ajouter un propriétaire</a>
+				            <a class="dropdown-item" href="#">Ajouter un appartement</a>
+				            <a class="dropdown-item" href="#">Ajouter un service</a>
+				          </div>
+				        </li> #}
+			</ul>
+			<form class="d-flex">
+				<input class="form-control me-sm-2" type="text" placeholder="Search">
+				<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+			</form>
+		</div>
+	</div>
 </nav>
