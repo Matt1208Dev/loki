@@ -11,19 +11,28 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CartController extends AbstractController
 {
+    protected $serviceRepository;
+    protected $cartService;
+
+    public function __construct(ServiceRepository $serviceRepository, CartService $cartService)
+    {
+        $this->serviceRepository = $serviceRepository;
+        $this->cartService = $cartService;
+    }
+
     /**
      * @Route("/cart/add/{id}", name="cart_add", requirements={"id":"\d+"})
      */
-    public function add($id, ServiceRepository $serviceRepository, CartService $cartService, Request $request)
+    public function add($id, Request $request)
     {
         // Est-ce que le produit existe ?
-        $service = $serviceRepository->find($id);
+        $service = $this->serviceRepository->find($id);
 
         if (!$service) {
             throw new NotFoundHttpException("Le service $id n'existe pas");
         }
 
-        $cartService->add($id);
+        $this->cartService->add($id);
 
         $this->addFlash('success', "Service ajouté");
 
@@ -37,16 +46,16 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/decrement/{id}", name="cart_decrement", requirements={"id":"\d+"})
      */
-    public function decrement(int $id, ServiceRepository $serviceRepository, CartService $cartService) {
+    public function decrement(int $id) {
         
         // Est-ce que le produit existe ?
-        $service = $serviceRepository->find($id);
+        $service = $this->serviceRepository->find($id);
 
         if (!$service) {
             throw new NotFoundHttpException("Le service $id n'existe pas");
         }
 
-        $cartService->decrement($id);
+        $this->cartService->decrement($id);
 
         $this->addFlash('success', "La quantité du service a été réduite");
 
@@ -56,15 +65,15 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/delete/{id}", name="cart_delete", requirements={"id":"\d+"})
      */
-    public function delete($id, ServiceRepository $serviceRepository, CartService $cartService) {
+    public function delete($id) {
 
-        $service = $serviceRepository->find($id);
+        $service = $this->serviceRepository->find($id);
 
         if(!$service) {
             throw $this->createNotFoundException("Le produit $id n'existe pas.");
         }
 
-        $cartService->remove($id);
+        $this->cartService->remove($id);
 
         $this->addFlash("success", "Le service a bien été retiré du panier");
 
@@ -74,11 +83,11 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/", name="cart_show")
      */
-    public function show(CartService $cartService)
+    public function show()
     {
-        $detailedCart = $cartService->getDetailedCartItems();
+        $detailedCart = $this->cartService->getDetailedCartItems();
 
-        $total = $cartService->getTotal();
+        $total = $this->cartService->getTotal();
 
         return $this->render('cart/index.html.twig', [
             'items' => $detailedCart,
