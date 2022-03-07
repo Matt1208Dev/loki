@@ -25,24 +25,30 @@
 						<th scope="col">Libellé</th>
 						<th scope="col">Tarif</th>
 						<th scope="col"></th>
+						<th scope="col"></th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for service in services %}
 						<tr class="table-primary">
-							<td class="col-2" scope="row">{{service.id}}</td>
-							<td class="col-6" scope="row">{{service.label}}</td>
+							<td class="col-1" scope="row">{{service.id}}</td>
+							<td class="col-5" scope="row">{{service.label}}</td>
 							<td class="col-2" scope="row">{{service.price}}</td>
 							<td class="col-2">
-								<a class="text-info text-decoration-none" href="{{urlGenerator.generate('service_edit', {'id': service.id})}}">Editer
+								<a class="text-decoration-none" href="{{urlGenerator.generate('service_edit', {'id': service.id})}}">Editer
 									<i class="fa-solid fa-pen-to-square"></i>
+								</a>
+							</td>
+							<td class="col-2">
+								<a class="text-decoration-none" href="{{urlGenerator.generate('cart_add', {'id': service.id})}}">Ajouter
+									<i class="fa-solid fa-cart-plus fs-5 align-middle"></i>
 								</a>
 							</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-			<a href="{{urlGenerator.generate('service_create')}}" class="btn btn-success mb-3">Ajouter un service</a>
+			<a href="{{urlGenerator.generate('service_create')}}" class="btn btn-outline-primary mb-3">Créer un service</a>
 		</div>
 	</div>
 
