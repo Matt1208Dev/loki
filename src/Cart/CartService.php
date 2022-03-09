@@ -17,11 +17,13 @@ class CartService
         $this->serviceRepository = $serviceRepository;
     }
 
-    public function getCart() {
+    public function getCart()
+    {
         return $this->session->get('cart', []);
     }
 
-    public function saveCart($cart) {
+    public function saveCart($cart)
+    {
         return $this->session->set('cart', $cart);
     }
 
@@ -35,44 +37,49 @@ class CartService
         if (!array_key_exists($id, $cart)) {
             $cart[$id] = 0;
         }
-            
+
         $cart[$id]++;
-        
+
 
         // Mise à jour de la variable de session 'cart'
         $this->saveCart($cart);
     }
 
-    public function decrement(int $id) {
+    public function decrement(int $id)
+    {
 
         $cart = $this->getCart();
 
-        if(!array_key_exists($id, $cart)) {
+        if (!array_key_exists($id, $cart)) {
             return;
         }
 
-        if($cart[$id] === 1) {
+        if ($cart[$id] === 1) {
             $this->remove($id);
             return;
         }
 
         $cart[$id]--;
 
-        $this->saveCart($cart);    }
+        $this->saveCart($cart);
+    }
 
-    public function remove(int $id) {
+    public function remove(int $id)
+    {
 
         $cart = $this->getCart();
 
         unset($cart[$id]);
 
-        $this->saveCart($cart);    }
+        $this->saveCart($cart);
+    }
 
-    public function getTotal() {
+    public function getTotal()
+    {
 
         $total = 0;
 
-        foreach($this->getCart() as $id => $qty) {
+        foreach ($this->getCart() as $id => $qty) {
             $service = $this->serviceRepository->find($id);
 
             $total += $service->getPrice() * $qty;
@@ -81,12 +88,13 @@ class CartService
         return $total;
     }
 
-    public function getDetailedCartItems() : array {
-        
+    public function getDetailedCartItems(): array
+    {
+
         $detailedCart = [];
-        
-        foreach($this->getCart() as $id => $qty) {
-            
+
+        foreach ($this->getCart() as $id => $qty) {
+
             $service = $this->serviceRepository->find($id);
             $detailedCart[] = new CartItem($service, $qty);
         }

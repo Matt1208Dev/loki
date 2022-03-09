@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Owner;
 use App\Entity\Service;
 use App\Entity\Apartment;
+use App\Entity\Rent;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
@@ -37,6 +38,16 @@ class AppFixtures extends Fixture
 
         $manager->persist($user);
 
+        for ($s = 0; $s < 10; $s++) {
+            $service = new Service;
+            $service->setLabel($faker->word())
+                ->setPrice($faker->randomFloat(2, 5, 30))
+                ->setRetired(false);
+
+            $manager->persist($service);
+        }
+
+        $owners = [];
         for ($o = 0; $o < 10; $o++) {
             $owner = new Owner;
             $owner->setFirstName($faker->firstName())
@@ -60,18 +71,31 @@ class AppFixtures extends Fixture
                     ->setRetired(false);
 
                 $manager->persist($apartment);
+
+                for ($r = 0; $r < 3; $r++) {
+                    $rent = new Rent();
+        
+                    $rent->setOwner($owner)
+                        ->setApartment($apartment)
+                        ->setStartingDate($faker->dateTimeBetween('-6 months'))
+                        ->setEndingDate($faker->dateTimeBetween($rent->getStartingDate(), '+ 7 days'))
+                        ->setRentType($faker->randomElement([$rent::RENT_NORMAL, $rent::RENT_ONLINE]))
+                        ->setTotal($faker->randomFloat(2, 50, 1000))
+                        ->setIsPaid($faker->boolean(80))
+                        ->setDeposit($faker->randomElement([$rent::DEPOSIT_ONLINE, $rent::DEPOSIT_OWNER, $rent::DEPOSIT_PAY_CHEQUE]))
+                        ->setComment($faker->sentence(20))
+                        ->setCreatedAt($rent->getEndingDate());
+                    
+                    if ($rent->getIsPaid() === true) {
+                        $rent->setSettlementDate($faker->dateTimeBetween('-6 months'));
+                    }
+        
+                    $manager->persist($rent);
+                }
             }
 
             $manager->persist($owner);
         }
-
-        // for ($s = 0; $s < 10; $s++) {
-        //     $service = new Service;
-        //     $service->setLabel($faker->word())
-        //         ->setPrice($faker->randomFloat(2, 5, 30));
-
-        //     $manager->persist($service);
-        // }
 
         $manager->flush();
     }

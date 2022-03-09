@@ -36,7 +36,7 @@ class CartController extends AbstractController
 
         $this->addFlash('success', "Service ajouté");
 
-        if($request->query->get('returnToCart')) {
+        if ($request->query->get('returnToCart')) {
             return $this->redirectToRoute('cart_show');
         }
 
@@ -46,8 +46,9 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/decrement/{id}", name="cart_decrement", requirements={"id":"\d+"})
      */
-    public function decrement(int $id) {
-        
+    public function decrement(int $id)
+    {
+
         // Est-ce que le produit existe ?
         $service = $this->serviceRepository->find($id);
 
@@ -65,11 +66,12 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/delete/{id}", name="cart_delete", requirements={"id":"\d+"})
      */
-    public function delete($id) {
+    public function delete($id)
+    {
 
         $service = $this->serviceRepository->find($id);
 
-        if(!$service) {
+        if (!$service) {
             throw $this->createNotFoundException("Le produit $id n'existe pas.");
         }
 

@@ -1,0 +1,49 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Liste des facturations
+{% endblock %}
+
+{% block body %}
+	<h1 class="mb-5">Liste des facturations</h1>
+
+	<table class="table">
+		<thead>
+			<tr class="text-center">
+				<th>Location N°</th>
+				<th>Date de création</th>
+				<th>Appartement</th>
+				<th>Propriétaire</th>
+				<th>Arrivée</th>
+				<th>Départ</th>
+				<th>Total</th>
+				<th>Statut</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for r in rents %}
+				<tr class="text-center">
+					<td>{{ r.id }}</td>
+					<td>{{ r.createdAt|format_datetime('short', 'none', locale='fr') }}</td>
+					<td>{{ r.apartment.id }}</td>
+					<td>{{ r.owner.firstName }}
+						{{ r.owner.lastName }}</td>
+					<td>{{ r.startingDate|format_datetime('short', 'none', locale='fr') }}</td>
+					<td>{{ r.endingDate|format_datetime('short', 'none', locale='fr') }}</td>
+					<td>{{ r.total }}</td>
+					{% if r.isPaid == true %}
+						<td>Réglée</td>
+					{% else %}
+						<td>En cours</td>
+					{% endif %}
+					<td>
+						<a class="text-decoration-none" href="{{urlGenerator.generate('rent_show', {'id': r.id})}}">Détails
+							<i class="fa-solid fa-pen-to-square"></i>
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
