@@ -18,7 +18,7 @@
 
 	<div class="row">
 		<div class="col-12">
-			<table class="table table-hover">
+			<table class="table table-striped">
 				<thead>
 					<tr>
 						<th scope="col">ID</th>
@@ -26,12 +26,13 @@
 						<th scope="col">Adresse</th>
 						<th scope="col">Code postal</th>
 						<th scope="col">Ville</th>
+						<th scope="col">Commentaire</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for apartment in apartments %}
-						<tr class="table-primary">
+						<tr>
 							<td scope="row">{{apartment.id}}</td>
 							<td>
 								<a href="{{urlGenerator.generate('owner_show', {'id': apartment.owner.id})}}">{{apartment.owner.lastName}}
@@ -40,7 +41,13 @@
 							<td>{{apartment.street}}</td>
 							<td>{{apartment.zip}}</td>
 							<td>{{apartment.city}}</td>
-							<td><a class="text-info text-decoration-none" href="{{urlGenerator.generate('apartment_edit', {'id': apartment.id})}}">Editer <i class="fa-solid fa-pen-to-square"></i></a></td>
+							<td>{{apartment.comment}}</td>
+							<td>
+								<a class="text-primary text-decoration-none" href="{{urlGenerator.generate('apartment_edit', {'id': apartment.id})}}">Editer
+									<i class="fa-solid fa-pen-to-square"></i>
+								</a>
+							</td>
+
 						</tr>
 					{% endfor %}
 				</tbody>

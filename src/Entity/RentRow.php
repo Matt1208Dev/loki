@@ -44,6 +44,11 @@ class RentRow
      */
     private $totalRow;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $serviceLabel;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +110,18 @@ class RentRow
     public function setTotalRow(string $totalRow): self
     {
         $this->totalRow = $totalRow;
+
+        return $this;
+    }
+
+    public function getServiceLabel(): ?string
+    {
+        return $this->serviceLabel;
+    }
+
+    public function setServiceLabel(?string $serviceLabel): self
+    {
+        $this->serviceLabel = $serviceLabel;
 
         return $this;
     }

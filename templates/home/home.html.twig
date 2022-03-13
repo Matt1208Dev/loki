@@ -1,9 +1,53 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-    Accueil
+	Accueil
 {% endblock %}
 
 {% block body %}
-    <h1>Accueil en construction...</h1>
+	{% if app.user %}
+		<div class="mb-3">
+			Bonjour
+			{{ app.user.fullName }},
+			<a href="{{ path('security_logout') }}">Déconnexion</a>
+		</div>
+	{% endif %}
+	<h3 class="mb-4">Mes catégories</h3>
+
+	<div class="row">
+		<div class="col-md-6">
+			<a class="text-decoration-none" href="{{path('owner_list')}}">
+				<div class="alert alert-warning rounded text-center">
+					<h2>Propriétaires</h2>
+					<i class="fas fa-user-group fs-1"></i>
+				</div>
+			</a>
+		</div>
+		<div class="col-md-6">
+			<a class="text-decoration-none" href="{{path('apartment_list')}}">
+				<div class="alert alert-info text-center">
+					<h2>Appartements</h2>
+					<i class="fas fa-house fs-1"></i>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<a class="text-decoration-none" href="{{path('service_list')}}">
+				<div class="alert alert-danger text-center">
+					<h2>Services</h2>
+					<i class="fas fa-hammer fs-1"></i>
+				</div>
+			</a>
+		</div>
+		<div class="col-md-6">
+			<a class="text-decoration-none" href="{{path('owner_list')}}">
+				<div class="alert alert-success text-center">
+					<h2>Facturation</h2>
+					<i class="fas fa-file-invoice-dollar fs-1"></i>
+				</div>
+			</a>
+		</div>
+	</div>
 {% endblock %}

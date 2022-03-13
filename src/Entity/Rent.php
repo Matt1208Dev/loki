@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Rent
 {
+    public const RENT_NORMAL = "Normale";
+    public const RENT_ONLINE = "En ligne";
+    public const DEPOSIT_PAY_CHEQUE = "Chèque bancaire";
+    public const DEPOSIT_ONLINE = "En ligne";
+    public const DEPOSIT_OWNER = "Propriétaire";
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

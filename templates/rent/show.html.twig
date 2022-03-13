@@ -1,0 +1,101 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Détails de la facture n°{{ items[0].rent.id }}
+{% endblock %}
+
+{% block body %}
+	<h1 class="mb-5">Détails de la facture n°{{ items[0].rent.id }}</h1>
+	<div class="row mb-4">
+		<div class="card text-dark col-6 col-md-4 mb-3 col-4 px-0">
+			<div class="card-header fw-bold">
+				<em>Propriétaire</em>
+			</div>
+			<div class="card-body">
+				<p class="card-text">{{ items[0].rent.owner.firstName }}
+					{{ items[0].rent.owner.lastName }}</p>
+			</div>
+		</div>
+		<div class="card text-dark col-6 col-md-4 mb-3 col-4 px-0">
+			<div class="card-header fw-bold">
+				<em>Appartment</em>
+			</div>
+			<div class="card-body">
+				<p class="card-text">{{ items[0].rent.apartment.id }}</p>
+			</div>
+		</div>
+		<div class="card text-dark col-6 col-md-4 mb-3 col-4 px-0">
+			<div class="card-header fw-bold">
+				<em>Type de location</em>
+			</div>
+			<div class="card-body">
+				<p class="card-text">{{ items[0].rent.rentType }}</p>
+			</div>
+		</div>
+		<div class="card text-dark col-6 col-md-4 mb-3 col-4 px-0">
+			<div class="card-header fw-bold">
+				<em>Date d'entrée</em> | <em>Date de sortie</em>
+			</div>
+			<div class="card-body">
+				<p class="card-text">{{ items[0].rent.startingDate| date('d/m/Y') }}
+					|
+					{{ items[0].rent.endingDate| date('d/m/Y') }}</p>
+			</div>
+		</div>
+		<div class="card text-dark col-6 col-md-4 mb-3 col-4 px-0">
+			<div class="card-header fw-bold">
+				<em>Caution</em>
+			</div>
+			<div class="card-body">
+				<p class="card-text">{{ items[0].rent.deposit }}
+				</p>
+			</div>
+		</div>
+		<div class="card text-dark col-6 col-md-4 mb-3 col-4 px-0">
+			<div class="card-header fw-bold">
+				<em>Statut Règlement</em>
+			</div>
+			<div class="card-body">
+				{% if items[0].rent.isPaid == true %}
+					<p class="card-text">Réglée le
+						{{ items[0].rent.SettlementDate| date('d/m/Y') }}
+					</p>
+				{% else %}
+					<p class="card-text">En attente
+					</p>
+
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col" class="text-center">ID Service</th>
+				<th scope="col">Service</th>
+				<th scope="col">Prix</th>
+				<th scope="col" class="text-center">Quantité</th>
+				<th scope="col">Total ligne (TTC)</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for item in items %}
+				<tr>
+					<td class="text-center">{{ item.service.id }}</td>
+					<td>{{ item.serviceLabel }}</td>
+					<td>{{ item.price }}</td>
+					<td class="text-center">{{ item.quantity }}</td>
+					<td>{{ item.totalRow }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr class="fs-6">
+				<td colspan="4">Total :</td>
+				<td>{{ total|format_currency('EUR', locale='fr') }}</td>
+			</tr>
+		</tfoot>
+	</table>
+	<a href="{{ path('rent_list') }}" class="btn btn-outline-primary">Retour</a>
+{% endblock %}

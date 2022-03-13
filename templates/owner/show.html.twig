@@ -23,67 +23,89 @@
 		{{owner.lastName}}</h1>
 
 	<div class="card mb-4">
+		<div class="row">
 
-		<div class="card-body">
-
-			<div class="row">
-
-				<div class="col-md-6">
-					<h6 class="card-title">Nom</h6>
-					<p class="card-text text-white mb-4">{{owner.lastName}}</p>
-					<h6 class="card-title">Prénom</h6>
-					<p class="card-text text-white mb-4">{{owner.firstName}}</p>
-					<h6 class="card-title">Adresse</h6>
-					<p class="card-text text-white mb-4">{{owner.street}}</p>
-					<h6 class="card-title">Code postal</h6>
-					<p class="card-text text-white mb-4">{{owner.zip}}</p>
-					<h6 class="card-title">Ville</h6>
-					<p class="card-text text-white mb-4">{{owner.city}}</p>
+			<div class="col-md-6 pe-md-0">
+				<div class="card-header fw-bold fst-italic">Nom</div>
+				<div class="card-body">
+					<p class="card-text text-dark mb-4">{{owner.lastName}}</p>
 				</div>
+				<div class="card-header fw-bold fst-italic">Prénom</div>
+				<div class="card-body">
+					<p class="card-text text-dark mb-4">{{owner.firstName}}</p>
+				</div>
+				<div class="card-header fw-bold fst-italic">Adresse</div>
+				<div class="card-body">
+					<p class="card-text text-dark mb-4">{{owner.street}}</p>
+				</div>
+				<div class="card-header fw-bold fst-italic">Code postal</div>
+				<div class="card-body">
+					<p class="card-text text-dark mb-4">{{owner.zip}}</p>
+				</div>
+				<div class="card-header fw-bold fst-italic">Ville</div>
+				<div class="card-body">
+					<p class="card-text text-dark mb-4">{{owner.city}}</p>
+				</div>
+			</div>
 
-				<div class="col-md-6">
-					<h6 class="card-title">Téléphone</h6>
-					<p class="card-text text-white mb-4">{{owner.phone}}</p>
-					<h6 class="card-title">Email</h6>
-					<p>
-						<a href="mailto:{{owner.mail}}" class="card-text text-white mb-4">{{owner.mail}}</a>
+			<div class="col-md-6 ps-md-0">
+				<div class="card-header fw-bold fst-italic">Téléphone</div>
+				<div class="card-body">
+					<p class="card-text text-dark mb-4">{{owner.phone}}</p>
+				</div>
+				<div class="card-header fw-bold fst-italic">Email</div>
+				<div class="card-body">
+					<p class="card-text text-dark mb-4">
+						<a href="mailto:{{owner.mail}}" class="text-dark">{{owner.mail}}</a>
 					</p>
-					<h6 class="card-title">Commentaire</h6>
-
-					{% if (owner.comment == null) %}
-						<p class="card-text text-white mb-4">Aucun</p>
-					{% else %}
-						<p class="card-text text-white mb-4">{{owner.comment}}</p>
-					{% endif %}
-
-					<h6 class="card-title">Date de création</h6>
-					<p class="card-text text-white mb-4">{{owner.createdAt | format_datetime('short', 'short', locale='fr')}}</p>
 				</div>
+			<div class="card-header fw-bold fst-italic">Commentaire</div>
+
+			{% if (owner.comment == null) %}
+				<div class="card-body">
+					<p class="card-text text-dark mb-4">Aucun</p>
+				</div>
+			{% else %}
+				<div class="card-body">
+					<p class="card-text text-dark mb-4">{{owner.comment}}</p>
+				</div>
+			{% endif %}
+
+			<div class="card-header fw-bold fst-italic">Date de création</div>
+			<div class="card-body">
+				<p class="card-text text-dark mb-4">{{owner.createdAt | format_datetime('short', 'short', locale='fr')}}</p>
 			</div>
-
-			<a href="{{urlGenerator.generate('owner_list')}}" class="btn btn-primary"><i class="fa-regular fa-arrow-left"></i> Retour</a>
-
-			<a href="{{urlGenerator.generate('owner_edit', {'id': owner.id})}}" class="btn btn-info">Editer <i class="fa-solid fa-pen-to-square"></i></a>
-
 		</div>
-
 	</div>
-
-	<h3 class="mb-3">Appartements</h3>
 	<div class="row">
-		{% for apartment in apartments %}
-			<div class="col-md-4">
-				<div class="card text-white bg-primary mb-3">
-					<div class="card-header">Référence ID {{apartment.id}}</div>
-					<div class="card-body">
-						<p class="card-text">{{apartment.street}}</p>
-						<p class="card-text">{{apartment.zip}}</p>
-						<p class="card-text">{{apartment.city}}</p>
-						<a href="{{urlGenerator.generate('apartment_edit', {'id': apartment.id})}}" class="btn btn-sm btn-info">Editer <i class="fa-solid fa-pen-to-square"></i></a>
-					</div>
+		<div class="ms-3 mb-4">
+			<a href="{{urlGenerator.generate('owner_list')}}" class="btn btn-outline-primary">
+				<i class="fa-regular fa-arrow-left"></i>
+				Retour</a>
+
+			<a href="{{urlGenerator.generate('owner_edit', {'id': owner.id})}}" class="btn btn-primary">Editer
+				<i class="fa-solid fa-pen-to-square"></i>
+			</a>
+		</div>
+	</div>
+</div>
+
+<h3 class="mb-3">Appartements</h3>
+<div class="row">
+	{% for apartment in apartments %}
+		<div class="col-md-4">
+			<div class="card text-dark mb-3">
+				<div class="card-header">Référence ID
+					{{apartment.id}}</div>
+				<div class="card-body">
+					<p class="card-text">{{apartment.street}}</p>
+					<p class="card-text">{{apartment.zip}}</p>
+					<p class="card-text">{{apartment.city}}</p>
+					<a href="{{urlGenerator.generate('apartment_edit', {'id': apartment.id})}}" class="btn btn-sm btn-primary">Editer
+						<i class="fa-solid fa-pen-to-square"></i>
+					</a>
 				</div>
 			</div>
-		{% endfor %}
-	</div>
-
-{% endblock %}
+		</div>
+	{% endfor %}
+</div>{% endblock %}
