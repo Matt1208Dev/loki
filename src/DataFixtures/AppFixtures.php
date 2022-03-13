@@ -8,6 +8,7 @@ use App\Entity\Owner;
 use App\Entity\Service;
 use App\Entity\Apartment;
 use App\Entity\Rent;
+use App\Entity\RentRow;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
@@ -38,11 +39,14 @@ class AppFixtures extends Fixture
 
         $manager->persist($user);
 
+        $services = [];
         for ($s = 0; $s < 10; $s++) {
             $service = new Service;
             $service->setLabel($faker->word())
-                ->setPrice($faker->randomFloat(2, 5, 30))
+                ->setPrice($faker->randomNumber(2, 5, 30))
                 ->setRetired(false);
+
+            $services[] = $service;
 
             $manager->persist($service);
         }
@@ -80,7 +84,7 @@ class AppFixtures extends Fixture
                         ->setStartingDate($faker->dateTimeBetween('-6 months'))
                         ->setEndingDate($faker->dateTimeBetween($rent->getStartingDate(), '+ 7 days'))
                         ->setRentType($faker->randomElement([$rent::RENT_NORMAL, $rent::RENT_ONLINE]))
-                        ->setTotal($faker->randomFloat(2, 50, 1000))
+                        ->setTotal($faker->randomNumber(2, 50, 1000))
                         ->setIsPaid($faker->boolean(80))
                         ->setDeposit($faker->randomElement([$rent::DEPOSIT_ONLINE, $rent::DEPOSIT_OWNER, $rent::DEPOSIT_PAY_CHEQUE]))
                         ->setComment($faker->sentence(20))
@@ -88,6 +92,20 @@ class AppFixtures extends Fixture
                     
                     if ($rent->getIsPaid() === true) {
                         $rent->setSettlementDate($faker->dateTimeBetween('-6 months'));
+                    }
+
+                    $selectedServices = $faker->randomElements($services, mt_rand(3, 5));
+
+                    foreach($selectedServices as $service) {
+                        $RentItem = new RentRow();
+                        $RentItem->setRent($rent)
+                            ->setService($service)
+                            ->setQuantity(mt_rand(1, 3))
+                            ->setPrice($service->getPrice())
+                            ->setTotalRow($RentItem->getQuantity() * $RentItem->getPrice())
+                            ->setServiceLabel($service->getLabel());
+
+                        $manager->persist($RentItem);
                     }
         
                     $manager->persist($rent);

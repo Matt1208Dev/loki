@@ -2,55 +2,67 @@
 
 namespace App\Controller\Rent;
 
-use App\Repository\RentRepository;
 use Twig\Environment;
+use App\Repository\RentRepository;
+use App\Repository\RentRowRepository;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class RentListController extends AbstractController {
+class RentListController extends AbstractController
+{
 
-    protected $security;
-    protected $twig;
     protected $rentRepository;
+    protected $rentRowRepository;
     protected $urlGenerator;
 
-    public function __construct(Security $security, Environment $twig, RentRepository $rentRepository, UrlGeneratorInterface $urlGenerator)
+    public function __construct(RentRepository $rentRepository, RentRowRepository $rentRowRepository, UrlGeneratorInterface $urlGenerator)
     {
-        $this->security = $security;
-        $this->twig = $twig;
         $this->rentRepository = $rentRepository;
+        $this->rentRowRepository = $rentRowRepository;
         $this->urlGenerator = $urlGenerator;
     }
 
     /** 
-     * @Route("/rent", name="rent_index")
+     * @Route("/rent", name="rent_list")
+     * @IsGranted("ROLE_USER", message="Vous devez être connecté pour à la liste des locations")
      */
-    public function index() {
+    public function index()
+    {
 
-        $user = $this->security->getUser();
-
-        if(!$user) {
-            throw new AccessDeniedException("Vous devez être connecté pour accéder à cette page");
-        }
+        /** @var User */
+        $user = $this->getUser();
 
         $rentRows = $this->rentRepository->findBy([], ['createdAt' => 'DESC']);
 
-        $html = $this->twig->render('rent/index.html.twig', [
+        return $this->render('rent/index.html.twig', [
             'rents' => $rentRows,
             'urlGenerator' => $this->urlGenerator
         ]);
-
-        return new Response($html);
     }
 
     /**
      * @Route("/rent/{id}", name="rent_show", requirements={"id":"\d+"})
+     * @IsGranted("ROLE_USER", message="Vous devez être connecté pour accder à cette page")
      */
-    public function show($id) {
-        dd("Ca fonctionne !");
+    public function show(int $id)
+    {
+        $rentItems = $this->rentRowRepository->findBy(["rent" => $id]);
+
+        $total = 0;
+
+        foreach($rentItems as $item) {
+            $total += $item->getPrice() * $item->getQuantity();
+        }
+
+        return $this->render('rent/show.html.twig', [
+            'items' => $rentItems,
+            'total' => $total,
+            'urlGenerator' => $this->urlGenerator
+        ]);
     }
 }

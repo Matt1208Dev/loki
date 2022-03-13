@@ -27,6 +27,11 @@ class CartService
         return $this->session->set('cart', $cart);
     }
 
+    public function empty()
+    {
+        $this->saveCart([]);
+    }
+
     public function add(int $id)
     {
 
@@ -39,7 +44,6 @@ class CartService
         }
 
         $cart[$id]++;
-
 
         // Mise à jour de la variable de session 'cart'
         $this->saveCart($cart);
@@ -76,7 +80,6 @@ class CartService
 
     public function getTotal()
     {
-
         $total = 0;
 
         foreach ($this->getCart() as $id => $qty) {
@@ -88,9 +91,9 @@ class CartService
         return $total;
     }
 
+    /** @return CartItem[] */
     public function getDetailedCartItems(): array
     {
-
         $detailedCart = [];
 
         foreach ($this->getCart() as $id => $qty) {

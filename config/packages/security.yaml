@@ -41,6 +41,7 @@ security:
         - { path: ^/owner, roles: ROLE_ADMIN }
         - { path: ^/apartment, roles: ROLE_ADMIN }
         - { path: ^/service, roles: ROLE_ADMIN }
+        - { path: ^/rent, roles: ROLE_ADMIN }
 
 when@test:
     security:
