@@ -11,7 +11,6 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.11",
-        "fakerphp/faker": "^1.18",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/apache-pack": "^1.0",
         "symfony/console": "5.4.*",
@@ -65,8 +64,7 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "database-setup": [
-            "php bin/console doctrine:migrations:migrate --no-interaction",
-            "php bin/console doctrine:fixtures:load --no-interaction"
+            "php bin/console doctrine:migrations:migrate --no-interaction"
         ],
         "post-install-cmd": [
             "@auto-scripts",
