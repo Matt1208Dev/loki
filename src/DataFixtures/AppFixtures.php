@@ -26,94 +26,94 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create('fr_FR');
+        // $faker = Factory::create('fr_FR');
 
         $user = new User();
 
-        $hash = $this->encoder->hashPassword($user, "password");
+        $hash = $this->encoder->hashPassword($user, "Lokiallard2022!!");
 
-        $user->setEmail("allardphilippe@gmail.com")
+        $user->setEmail("allard.philippe60@gmail.com")
             ->setFullName("Philippe Allard")
             ->setPassword($hash)
             ->setRoles(['ROLE_ADMIN']);
 
         $manager->persist($user);
 
-        $services = [];
-        for ($s = 0; $s < 10; $s++) {
-            $service = new Service;
-            $service->setLabel($faker->word())
-                ->setPrice($faker->randomNumber(2, 5, 30))
-                ->setRetired(false);
+        // $services = [];
+        // for ($s = 0; $s < 10; $s++) {
+        //     $service = new Service;
+        //     $service->setLabel($faker->word())
+        //         ->setPrice($faker->randomNumber(2, 5, 30))
+        //         ->setRetired(false);
 
-            $services[] = $service;
+        //     $services[] = $service;
 
-            $manager->persist($service);
-        }
+        //     $manager->persist($service);
+        // }
 
-        $owners = [];
-        for ($o = 0; $o < 10; $o++) {
-            $owner = new Owner;
-            $owner->setFirstName($faker->firstName())
-                ->setLastName($faker->lastName())
-                ->setStreet($faker->streetAddress())
-                ->setZip($faker->postcode())
-                ->setCity($faker->city())
-                ->setPhone($faker->phoneNumber())
-                ->setMail($faker->email())
-                ->setComment($faker->sentence())
-                ->setCreatedAt($faker->dateTimeBetween('-6 months'))
-                ->setRetired(false);
+        // $owners = [];
+        // for ($o = 0; $o < 10; $o++) {
+        //     $owner = new Owner;
+        //     $owner->setFirstName($faker->firstName())
+        //         ->setLastName($faker->lastName())
+        //         ->setStreet($faker->streetAddress())
+        //         ->setZip($faker->postcode())
+        //         ->setCity($faker->city())
+        //         ->setPhone($faker->phoneNumber())
+        //         ->setMail($faker->email())
+        //         ->setComment($faker->sentence())
+        //         ->setCreatedAt($faker->dateTimeBetween('-6 months'))
+        //         ->setRetired(false);
 
-            for ($a = 0; $a < rand(1, 3); $a++) {
-                $apartment = new Apartment;
-                $apartment->setStreet($faker->streetAddress())
-                    ->setZip($faker->postcode())
-                    ->setCity($faker->city())
-                    ->setOwner($owner)
-                    ->setCreatedAt($faker->dateTimeBetween('-2 months'))
-                    ->setRetired(false);
+        //     for ($a = 0; $a < rand(1, 3); $a++) {
+        //         $apartment = new Apartment;
+        //         $apartment->setStreet($faker->streetAddress())
+        //             ->setZip($faker->postcode())
+        //             ->setCity($faker->city())
+        //             ->setOwner($owner)
+        //             ->setCreatedAt($faker->dateTimeBetween('-2 months'))
+        //             ->setRetired(false);
 
-                $manager->persist($apartment);
+        //         $manager->persist($apartment);
 
-                for ($r = 0; $r < 3; $r++) {
-                    $rent = new Rent();
+        //         for ($r = 0; $r < 3; $r++) {
+        //             $rent = new Rent();
         
-                    $rent->setOwner($owner)
-                        ->setApartment($apartment)
-                        ->setStartingDate($faker->dateTimeBetween('-6 months'))
-                        ->setEndingDate($faker->dateTimeBetween($rent->getStartingDate(), '+ 7 days'))
-                        ->setRentType($faker->randomElement([$rent::RENT_NORMAL, $rent::RENT_ONLINE]))
-                        ->setTotal($faker->randomNumber(2, 50, 1000))
-                        ->setIsPaid($faker->boolean(80))
-                        ->setDeposit($faker->randomElement([$rent::DEPOSIT_ONLINE, $rent::DEPOSIT_OWNER, $rent::DEPOSIT_PAY_CHEQUE]))
-                        ->setComment($faker->sentence(20))
-                        ->setCreatedAt($rent->getEndingDate());
+        //             $rent->setOwner($owner)
+        //                 ->setApartment($apartment)
+        //                 ->setStartingDate($faker->dateTimeBetween('-6 months'))
+        //                 ->setEndingDate($faker->dateTimeBetween($rent->getStartingDate(), '+ 7 days'))
+        //                 ->setRentType($faker->randomElement([$rent::RENT_NORMAL, $rent::RENT_ONLINE]))
+        //                 ->setTotal($faker->randomNumber(2, 50, 1000))
+        //                 ->setIsPaid($faker->boolean(80))
+        //                 ->setDeposit($faker->randomElement([$rent::DEPOSIT_ONLINE, $rent::DEPOSIT_OWNER, $rent::DEPOSIT_PAY_CHEQUE]))
+        //                 ->setComment($faker->sentence(20))
+        //                 ->setCreatedAt($rent->getEndingDate());
                     
-                    if ($rent->getIsPaid() === true) {
-                        $rent->setSettlementDate($faker->dateTimeBetween('-6 months'));
-                    }
+        //             if ($rent->getIsPaid() === true) {
+        //                 $rent->setSettlementDate($faker->dateTimeBetween('-6 months'));
+        //             }
 
-                    $selectedServices = $faker->randomElements($services, mt_rand(3, 5));
+        //             $selectedServices = $faker->randomElements($services, mt_rand(3, 5));
 
-                    foreach($selectedServices as $service) {
-                        $RentItem = new RentRow();
-                        $RentItem->setRent($rent)
-                            ->setService($service)
-                            ->setQuantity(mt_rand(1, 3))
-                            ->setPrice($service->getPrice())
-                            ->setTotalRow($RentItem->getQuantity() * $RentItem->getPrice())
-                            ->setServiceLabel($service->getLabel());
+        //             foreach($selectedServices as $service) {
+        //                 $RentItem = new RentRow();
+        //                 $RentItem->setRent($rent)
+        //                     ->setService($service)
+        //                     ->setQuantity(mt_rand(1, 3))
+        //                     ->setPrice($service->getPrice())
+        //                     ->setTotalRow($RentItem->getQuantity() * $RentItem->getPrice())
+        //                     ->setServiceLabel($service->getLabel());
 
-                        $manager->persist($RentItem);
-                    }
+        //                 $manager->persist($RentItem);
+        //             }
         
-                    $manager->persist($rent);
-                }
-            }
+        //             $manager->persist($rent);
+        //         }
+        //     }
 
-            $manager->persist($owner);
-        }
+        //     $manager->persist($owner);
+        // }
 
         $manager->flush();
     }
