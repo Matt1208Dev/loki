@@ -21,7 +21,7 @@ final class Version20220211154813 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE apartment CHANGE owner_id owner_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE owner ADD retired TINYINT(1) NOT NULL, CHANGE street street VARCHAR(150) NOT NULL');
+        $this->addSql('ALTER TABLE owner ADD retired TINYINT(1) DEFAULT NULL, CHANGE street street VARCHAR(150) NOT NULL');
         $this->addSql('ALTER TABLE rent CHANGE owner_id owner_id INT NOT NULL, CHANGE apartment_id apartment_id INT NOT NULL');
         $this->addSql('ALTER TABLE rent_row CHANGE service_id service_id INT NOT NULL, CHANGE rent_id rent_id INT NOT NULL');
     }
