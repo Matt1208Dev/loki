@@ -92,6 +92,7 @@
 
 <h3 class="mb-3">Appartements</h3>
 <div class="row">
+	{% if apartments %}
 	{% for apartment in apartments %}
 		<div class="col-md-4">
 			<div class="card text-dark mb-3">
@@ -108,4 +109,5 @@
 			</div>
 		</div>
 	{% endfor %}
+	{% endif %}
 </div>{% endblock %}
