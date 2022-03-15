@@ -66,7 +66,7 @@
         "database-setup": [
             "php bin/console doctrine:migrations:migrate first --no-interaction",
             "php bin/console doctrine:migrations:migrate latest --no-interaction",
-            "php bin/console doctrine:fictures:load --no-interaction"
+            "php bin/console doctrine:fixtures:load --no-interaction"
         ],
         "post-install-cmd": [
             "@auto-scripts",
