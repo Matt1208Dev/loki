@@ -102,7 +102,7 @@ class Rent
         return $this->Owner;
     }
 
-    public function setOwner(?Owner $Owner): self
+    public function setOwner(Owner $Owner): self
     {
         $this->Owner = $Owner;
 
@@ -114,7 +114,7 @@ class Rent
         return $this->Apartment;
     }
 
-    public function setApartment(?Apartment $Apartment): self
+    public function setApartment(Apartment $Apartment): self
     {
         $this->Apartment = $Apartment;
 

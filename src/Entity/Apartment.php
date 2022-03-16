@@ -85,7 +85,7 @@ class Apartment
         return $this->street;
     }
 
-    public function setStreet(?string $street): self
+    public function setStreet(string $street): self
     {
         $this->street = $street;
 
@@ -97,7 +97,7 @@ class Apartment
         return $this->city;
     }
 
-    public function setCity(?string $city): self
+    public function setCity(string $city): self
     {
         $this->city = $city;
 
@@ -109,7 +109,7 @@ class Apartment
         return $this->zip;
     }
 
-    public function setZip(?string $zip): self
+    public function setZip(string $zip): self
     {
         $this->zip = $zip;
 
