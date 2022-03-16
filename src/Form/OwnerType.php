@@ -76,7 +76,8 @@ class OwnerType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Complément d\'adresse, observations...'
                 ],
-                'required' => false
+                'required' => false,
+                'empty_data' => null
             ])
             ->add('retired', HiddenType::class, [
                 'empty_data' => false
