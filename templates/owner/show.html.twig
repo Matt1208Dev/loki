@@ -73,7 +73,7 @@
 
 			<div class="card-header fw-bold fst-italic">Date de création</div>
 			<div class="card-body">
-				<p class="card-text text-dark mb-4">{{owner.createdAt | format_datetime('short', 'short', locale='fr')}}</p>
+				<p class="card-text text-dark mb-4">{{owner.createdAt | date('d/m/Y')}}</p>
 			</div>
 		</div>
 	</div>
