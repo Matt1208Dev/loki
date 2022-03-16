@@ -6,6 +6,7 @@ use App\Repository\RentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=RentRepository::class)
@@ -34,6 +35,7 @@ class Rent
     /**
      * @ORM\ManyToOne(targetEntity=Apartment::class, inversedBy="rents")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Sélectionnez un choix")
      */
     private $Apartment;
 
@@ -54,6 +56,7 @@ class Rent
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @Assert\NotBlank(message="Sélectionnez un choix")
      */
     private $total;
 
@@ -74,6 +77,7 @@ class Rent
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="Sélectionnez un choix")
      */
     private $comment;
 

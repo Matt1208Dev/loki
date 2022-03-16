@@ -39,6 +39,7 @@ class CartConfirmationType extends AbstractType
             ])
             ->add('rentType', ChoiceType::class,[
                 'label' => "Type de location",
+                'placeholder' => "-- Choisir --",
                 'choices' => [
                     'Normale' => Rent::RENT_NORMAL,
                     'En ligne' => Rent::RENT_ONLINE
@@ -46,6 +47,7 @@ class CartConfirmationType extends AbstractType
             ])
             ->add('deposit', ChoiceType::class,[
                 'label' => "Type de caution",
+                'placeholder' => "-- Choisir --",
                 'choices' => [
                     'En ligne' => Rent::DEPOSIT_ONLINE,
                     'Propriétaire' => Rent::DEPOSIT_OWNER,
