@@ -24,13 +24,13 @@
 		<tbody>
 			{% for r in rents %}
 				<tr class="text-center">
-					<td>{{ r.createdAt|format_datetime('short', 'none', locale='fr') }}</td>
+					<td>{{ r.createdAt|date('d/m/Y')) }}</td>
 					<td>{{ r.id }}</td>
 					<td>{{ r.apartment.id }}</td>
 					<td>{{ r.owner.firstName }}
 						{{ r.owner.lastName }}</td>
-					<td>{{ r.startingDate|format_datetime('short', 'none', locale='fr') }}</td>
-					<td>{{ r.endingDate|format_datetime('short', 'none', locale='fr') }}</td>
+					<td>{{ r.startingDate|date('d/m/Y') }}</td>
+					<td>{{ r.endingDate|date('d/m/Y') }}</td>
 					<td>{{ r.total }}</td>
 					{% if r.isPaid == true %}
 						<td class="text-success">Réglée</td>

@@ -74,9 +74,9 @@
 			<tr>
 				<th scope="col" class="text-center">ID Service</th>
 				<th scope="col">Service</th>
-				<th scope="col">Prix</th>
+				<th scope="col">Prix (€)</th>
 				<th scope="col" class="text-center">Quantité</th>
-				<th scope="col">Total ligne (TTC)</th>
+				<th scope="col">Total ligne (€ TTC)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -93,7 +93,7 @@
 		<tfoot>
 			<tr class="fs-6">
 				<td colspan="4">Total :</td>
-				<td>{{ total|format_currency('EUR', locale='fr') }}</td>
+				<td>{{ total|format_number({fraction_digit: 2}, style='decimal') }}</td>
 			</tr>
 		</tfoot>
 	</table>
