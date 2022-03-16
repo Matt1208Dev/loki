@@ -37,24 +37,28 @@ class Owner
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Assert\NotBlank(message="L'adresse est obligatoire")
      * @Assert\Length(min=1, max=80, maxMessage="L'adresse ne doit pas excéder 150 caractères")
      */
     private $street;
 
     /**
      * @ORM\Column(type="string", length=80, nullable=true)
+     * @Assert\NotBlank(message="La ville est obligatoire")
      * @Assert\Length(min=1, max=50, maxMessage="Le nom de la ville ne doit pas excéder 80 caractères")
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=6, nullable=true)
+     * @Assert\NotBlank(message="Le code postal est obligatoire")
      * @Assert\Regex("/^((0[1-9])|([1-8][0-9])|(9[0-8])|(2A)|(2B))[0-9]{3}$/", message="Vous n'avez pas entré un code postal valide")
      */
     private $zip;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @Assert\NotBlank(message="Le numéro de téléphone est obligatoire")
      * @Assert\Regex("/^0[1-9]([-. ]?[0-9]{2}){4}$/", message="Le numéro de téléphone n'est pas valide")
      */
     private $phone;
