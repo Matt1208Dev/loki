@@ -134,7 +134,7 @@ class OwnerController extends AbstractController
      */
     public function list(OwnerRepository $ownerRepository, UrlGeneratorInterface $urlGenerator)
     {
-        $owners = $ownerRepository->findBy([], ['lastName' => 'ASC'], null);
+        $owners = $ownerRepository->findBy(['retired' => false], ['lastName' => 'ASC'], null);
 
         if(!$owners) {
             return $this->render('owner/no_data.html.twig', [
